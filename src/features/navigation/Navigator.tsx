@@ -1,5 +1,5 @@
 import SplashScreen from "react-native-bootsplash"
-import { NavigationContainer } from "@react-navigation/native"
+import { NavigationContainer, TabActions } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import React, { useEffect } from "react"
 import {
@@ -11,6 +11,8 @@ import Landing from "../landing/Landing"
 import Categories from "../categories/Categories"
 import Profile from "../profile/Profile"
 import kPlans from "../kPlans/kPlans"
+import EmergencyAccount from "../emergencyAccount/EmergencyAccount"
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 export type RootStackParamsList = {
   Home: undefined
@@ -18,9 +20,21 @@ export type RootStackParamsList = {
   Categories: undefined
   Profile: undefined
   kPlans: undefined
+  EmergencyAccount: undefined
 }
 
-const Stack = createStackNavigator<RootStackParamsList>()
+const Stack = createStackNavigator<RootStackParamsList>();
+const Tab = createBottomTabNavigator();
+
+export function ProfileStackScreen() {
+  return (<Stack.Navigator initialRouteName="Profile">
+    <Stack.Screen name="Profile" component={Profile} />
+    <Stack.Screen name="Home" component={Home} />
+    <Stack.Screen name="Landing" component={Landing} />
+    <Stack.Screen name="kPlans" component={kPlans} />
+    <Stack.Screen name="EmergencyAccount" component={EmergencyAccount} />
+  </Stack.Navigator>)
+}
 
 function Navigator() {
   /**
@@ -36,13 +50,10 @@ function Navigator() {
   }, [])
   return (
     <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator initialRouteName="Landing">
-        <Stack.Screen name="Landing" component={Landing} />
-        <Stack.Screen name="Home" component={Home} />
+      <Tab.Navigator initialRouteName="Profile">
+        <Tab.Screen name="Profile" component={ProfileStackScreen} />
         <Stack.Screen name="Categories" component={Categories} />
-        <Stack.Screen name="Profile" component={Profile} />
-        <Stack.Screen name="kPlans" component={kPlans} />
-      </Stack.Navigator>
+      </Tab.Navigator>
     </NavigationContainer>
   )
 }
