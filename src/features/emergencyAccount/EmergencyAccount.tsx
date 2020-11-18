@@ -18,10 +18,10 @@ var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
 interface Props {
-    navigation: StackNavigationProp<RootStackParamsList, "kPlans">
+    navigation: StackNavigationProp<RootStackParamsList, "EmergencyAccount">
 }
 
-const kPlans = ({ navigation }: Props) => {
+const EmergencyAccount = ({ navigation }: Props) => {
     const goGetStarted = () => navigation.navigate("Categories")
 
     return (
@@ -33,12 +33,12 @@ const kPlans = ({ navigation }: Props) => {
                 <View style={styles.innerContainer}>
                     <Space.V s={20} />
                     <View style={styles.container}>
-                        <TitleContainer text="Preparing for Retirement" />
+                        <TitleContainer text="Setting up an Emergency Account" />
                     </View>
                     <Space.V s={20} />
                     <View style={styles.container}>
                         <TextContainer>
-                            <Text>Preparing for retirement doesn't start years before you retire. It starts decades before.</Text>
+                            <Text>Put 6 months worth of your spending in a money market account for unpredictable times.</Text>
                         </TextContainer>
                     </View>
                     <Space.V s={10} />
@@ -72,4 +72,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default kPlans
+export default EmergencyAccount
