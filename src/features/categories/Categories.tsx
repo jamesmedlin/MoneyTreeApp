@@ -67,6 +67,7 @@ const Categories = ({ navigation }: Props) => {
                     <View style={styles.tile}>
                         <Tile text="Insurance" goTo="Landing" isCheckable={true} />
                     </View>
+                    <Space.V s={10} />
                 </View>
             </ScrollView>
         </View>
