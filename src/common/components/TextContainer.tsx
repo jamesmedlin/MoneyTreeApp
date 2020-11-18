@@ -31,8 +31,8 @@ const styles = StyleSheet.create({
         minWidth: 200,
         padding: 15,
         minHeight: 80,
-        justifyContent: "space-evenly",
-        alignItems: "center",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
         flexDirection: "column",
     },
 })

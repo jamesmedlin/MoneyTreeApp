@@ -19,7 +19,7 @@ const Tile = ({ goTo, text, isCheckable }: TileProps) => {
             {isCheckable ?
                 <View style={styles.container}>
                     <View style={styles.circleContainer}>
-                    <TouchableOpacity style={styles.circle}></TouchableOpacity>
+                        <TouchableOpacity style={styles.circle}></TouchableOpacity>
                     </View>
                     <Text style={styles.text2}>{text}</Text>
                 </View>
