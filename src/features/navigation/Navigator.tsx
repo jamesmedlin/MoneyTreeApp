@@ -13,6 +13,8 @@ import Profile from "../profile/Profile"
 import kPlans from "../kPlans/kPlans"
 import EmergencyAccount from "../emergencyAccount/EmergencyAccount"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { AuthProvider } from "../../providers/AuthProvider";
+import { TasksProvider } from "../../providers/TasksProvider";
 
 export type RootStackParamsList = {
   Home: undefined
@@ -49,12 +51,14 @@ function Navigator() {
     }
   }, [])
   return (
-    <NavigationContainer ref={navigationRef}>
-      <Tab.Navigator initialRouteName="Profile">
-        <Tab.Screen name="Profile" component={ProfileStackScreen} />
-        <Stack.Screen name="Categories" component={Categories} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer ref={navigationRef}>
+        <Tab.Navigator initialRouteName="Profile">
+          <Tab.Screen name="Profile" component={ProfileStackScreen} />
+          <Stack.Screen name="Categories" component={Categories} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </AuthProvider>
   )
 }
 
