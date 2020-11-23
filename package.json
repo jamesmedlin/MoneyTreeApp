@@ -52,6 +52,7 @@
     "react-native-screens": "^2.10.1",
     "react-native-svg": "^12.1.0",
     "react-redux": "^7.2.1",
+    "realm": "^10.0.1",
     "redux": "^4.0.5",
     "redux-observable": "^1.2.0",
     "rxjs": "^6.6.2",

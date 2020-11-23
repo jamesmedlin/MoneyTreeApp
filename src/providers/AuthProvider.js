@@ -66,9 +66,15 @@ const AuthProvider = ({ children }) => {
     // The signIn function takes an email and password and uses the
     // emailPassword authentication provider to log in.
     const signIn = async (email, password) => {
+        console.log(email, password);
         const creds = Realm.Credentials.emailPassword(email, password);
-        const newUser = await app.logIn(creds);
-        setUser(newUser);
+        console.log("Credentials: ", JSON.stringify(creds));
+        try {
+            const newUser = await app.logIn(creds);
+            setUser(newUser);
+        } catch (error) {
+            console.log("ERROR_HERE", error);
+        }
     };
 
     // The signUp function takes an email and password and uses the
