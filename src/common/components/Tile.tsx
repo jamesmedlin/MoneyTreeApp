@@ -1,17 +1,16 @@
 import React from "react"
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native"
-import Animated from "react-native-reanimated"
+import Animated, { onChange } from "react-native-reanimated"
 import { useTimingTransition } from "react-native-redash"
 import { useNavigation } from '@react-navigation/native'
 
 interface TileProps {
-    goTo: string
+    goTo?: string
     text: string
     isCheckable: boolean
 }
 
 const Tile = ({ goTo, text, isCheckable }: TileProps) => {
-
     const navigation = useNavigation();
 
     return (
@@ -19,7 +18,7 @@ const Tile = ({ goTo, text, isCheckable }: TileProps) => {
             {isCheckable ?
                 <View style={styles.container}>
                     <View style={styles.circleContainer}>
-                        <TouchableOpacity style={styles.circle}></TouchableOpacity>
+                        <TouchableOpacity style={styles.circle} />
                     </View>
                     <Text style={styles.text2}>{text}</Text>
                 </View>

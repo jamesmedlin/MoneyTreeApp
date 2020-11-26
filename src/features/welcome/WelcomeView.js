@@ -6,12 +6,12 @@ import { useAuth } from "../../providers/AuthProvider";
 export function WelcomeView({ navigation }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const { user, signOut, signIn } = useAuth();
+    const { user, signUp, signOut, signIn } = useAuth();
 
     useEffect(() => {
         // If there is a user logged in, go to the Profile page.
         if (user != null) {
-            // navigation.navigate("Profile");
+            navigation.navigate("Profile");
         }
     }, [user]);
 
@@ -30,14 +30,22 @@ export function WelcomeView({ navigation }) {
     // email/password in state and then signs in.
     const onPressSignUp = async () => {
         try {
-            await signOut();
-            // await signUp(email, password);
-            // signIn(email, password);
+            await signUp(email, password);
+            signIn(email, password);
         } catch (error) {
             Alert.alert(`Failed to sign up: ${error.message}`);
         }
     };
 
+
+    const onPressSignOut = async () => {
+        try {
+            await signOut();
+        } catch (error) {
+            Alert.alert(`Failed to sign out: ${error.message}`);
+        }
+    };
+    
     return (
         <View>
             <Text>Signup or Signin:</Text>
@@ -58,7 +66,8 @@ export function WelcomeView({ navigation }) {
                 />
             </View>
             <Button onPress={onPressSignIn} title="Sign In" />
-            <Button onPress={onPressSignUp} title="Sign Out" />
+            <Button onPress={onPressSignUp} title="Sign Up" />
+            <Button onPress={onPressSignOut} title="Sign Out" />
         </View>
     );
 }

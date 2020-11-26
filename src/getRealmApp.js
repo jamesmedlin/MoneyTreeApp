@@ -5,7 +5,7 @@ let app;
 // Returns the shared instance of the Realm app.
 export function getRealmApp() {
     if (app === undefined) {
-        const appId = "application-0-cmzie"; // Set Realm app ID here.
+        const appId = "application-1-rtmgi"; // Set Realm app ID here.
         const appConfig = {
             id: appId,
             timeout: 10000,

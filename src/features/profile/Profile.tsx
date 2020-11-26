@@ -6,7 +6,8 @@ import {
     Text,
     View,
     Dimensions,
-    TouchableOpacity,
+    Button,
+    Alert
 } from "react-native"
 import { Colors } from "react-native/Libraries/NewAppScreen"
 import Space from "../../common/components/abstract/Space"
@@ -14,6 +15,8 @@ import Tile from "../../common/components/Tile"
 import StatusBox from "../../common/components/StatusBox"
 import { RootStackParamsList } from "../navigation/Navigator"
 import ProgressCircle from 'react-native-progress-circle'
+import { useAuth } from "../../providers/AuthProvider";
+
 
 enum progress { hasNotStarted, inProgress, complete }
 
@@ -25,7 +28,18 @@ interface Props {
 }
 
 const Profile = ({ navigation }: Props) => {
-    const goGetStarted = () => navigation.navigate("Categories")
+    const { signOut } = useAuth();
+    function goGetStarted() { navigation.navigate("WelcomeView")}
+
+    const onPressSignOut = async () => {
+        try {
+            await signOut();
+            goGetStarted();
+        } catch (error) {
+            goGetStarted();
+            Alert.alert(`Failed to sign out: ${error.message}`);
+        }
+    };
 
     return (
         <View>
@@ -34,6 +48,8 @@ const Profile = ({ navigation }: Props) => {
                 style={styles.scrollView}
             >
                 <View style={styles.innerContainer}>
+                    <Space.V s={20} />
+                    <Button onPress={onPressSignOut} title="Sign Out" />
                     <Space.V s={20} />
                     <View style={styles.profilePicture}></View>
                     <Space.V s={10} />
