@@ -15,22 +15,17 @@ const AuthContext = React.createContext(null);
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(app.currentUser);
     const realmRef = useRef(null);
-    const [projectData, setProjectData] = useState([]);
 
     useEffect(() => {
         if (!user) {
             return;
         }
 
-        // The current user always has their own project, so we don't need
-        // to wait for the user object to load before displaying that project.
-        const myProject = { name: "My Project", partition: `project=${user.id}` };
-        setProjectData([myProject]);
-
         const config = {
             sync: {
                 user,
-                partitionValue: `user=${user.id}`,
+                partitionValue: `${user.id}`,
+                // partitionValue: `user=${user.id}`,
             },
         };
 
@@ -38,18 +33,6 @@ const AuthProvider = ({ children }) => {
         // to get the projects that the logged in user is a member of
         Realm.open(config).then((userRealm) => {
             realmRef.current = userRealm;
-            const users = userRealm.objects("User");
-
-            users.addListener(() => {
-                // The user custom data object may not have been loaded on
-                // the server side yet when a user is first registered.
-                if (users.length === 0) {
-                    setProjectData([myProject]);
-                } else {
-                    const { memberOf } = users[0];
-                    setProjectData([...memberOf]);
-                }
-            });
         });
 
         return () => {
@@ -58,7 +41,6 @@ const AuthProvider = ({ children }) => {
             if (userRealm) {
                 userRealm.close();
                 realmRef.current = null;
-                setProjectData([]); // set project data to an empty array (this prevents the array from staying in state on logout)
             }
         };
     }, [user]);
@@ -66,21 +48,23 @@ const AuthProvider = ({ children }) => {
     // The signIn function takes an email and password and uses the
     // emailPassword authentication provider to log in.
     const signIn = async (email, password) => {
-        console.log(email, password);
         const creds = Realm.Credentials.emailPassword(email, password);
-        console.log("Credentials: ", JSON.stringify(creds));
         try {
             const newUser = await app.logIn(creds);
             setUser(newUser);
         } catch (error) {
-            console.log("ERROR_HERE", error);
+            console.log("Error signing in: ", error);
         }
     };
 
     // The signUp function takes an email and password and uses the
     // emailPassword authentication provider to register the user.
     const signUp = async (email, password) => {
-        await app.emailPasswordAuth.registerUser(email, password);
+        try {
+            await app.emailPasswordAuth.registerUser(email, password);
+        } catch (error) {
+            console.log('Error signing user up', error);
+        }
     };
 
     // The signOut function calls the logOut function on the currently
@@ -101,7 +85,6 @@ const AuthProvider = ({ children }) => {
                 signIn,
                 signOut,
                 user,
-                projectData, // list of projects the user is a memberOf
             }}
         >
             {children}

@@ -38,6 +38,7 @@
     "@reduxjs/toolkit": "^1.4.0",
     "@sentry/react-native": "^1.7.1",
     "apisauce": "^1.1.2",
+    "nodejs-mobile-react-native": "^0.6.2",
     "react": "^16.13.1",
     "react-native": "^0.63.2",
     "react-native-bootsplash": "^2.2.5",

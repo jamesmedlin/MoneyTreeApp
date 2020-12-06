@@ -45,7 +45,7 @@ export function WelcomeView({ navigation }) {
             Alert.alert(`Failed to sign out: ${error.message}`);
         }
     };
-    
+
     return (
         <View>
             <Text>Signup or Signin:</Text>
