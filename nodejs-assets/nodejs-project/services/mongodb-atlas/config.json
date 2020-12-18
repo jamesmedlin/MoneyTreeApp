@@ -14,24 +14,17 @@
                 "required": true,
                 "permissions": {
                     "read": {
-                        "%%true": {
-                            "%function": {
-                                "arguments": [
-                                    "%%partition"
-                                ],
-                                "name": "canReadPartition"
+                        "$or": [
+                            {
+                                "%%user.id": "%%partition"
+                            },
+                            {
+                                "%%user.custom_data.shared": "%%partition"
                             }
-                        }
+                        ]
                     },
                     "write": {
-                        "%%true": {
-                            "%function": {
-                                "arguments": [
-                                    "%%partition"
-                                ],
-                                "name": "canWritePartition"
-                            }
-                        }
+                        "%%user.id": "%%partition"
                     }
                 }
             }

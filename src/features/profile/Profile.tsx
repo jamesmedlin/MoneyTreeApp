@@ -28,8 +28,8 @@ interface Props {
 }
 
 const Profile = ({ navigation }: Props) => {
-    const { signOut } = useAuth();
-    function goGetStarted() { navigation.navigate("WelcomeView")}
+    const { signOut, user } = useAuth();
+    function goGetStarted() { navigation.navigate("WelcomeView") }
 
     const onPressSignOut = async () => {
         try {
@@ -37,6 +37,15 @@ const Profile = ({ navigation }: Props) => {
             goGetStarted();
         } catch (error) {
             goGetStarted();
+            Alert.alert(`Failed to sign out: ${error.message}`);
+        }
+    };
+
+    const onPressSeeData = async () => {
+        try {
+            const data = await user.refreshCustomData();
+            console.log(data);
+        } catch (error) {
             Alert.alert(`Failed to sign out: ${error.message}`);
         }
     };
@@ -50,6 +59,8 @@ const Profile = ({ navigation }: Props) => {
                 <View style={styles.innerContainer}>
                     <Space.V s={20} />
                     <Button onPress={onPressSignOut} title="Sign Out" />
+                    <Space.V s={20} />
+                    <Button onPress={onPressSeeData} title="See Data" />
                     <Space.V s={20} />
                     <View style={styles.profilePicture}></View>
                     <Space.V s={10} />
