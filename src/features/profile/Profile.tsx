@@ -11,7 +11,6 @@ import {
 } from "react-native"
 import { Colors } from "react-native/Libraries/NewAppScreen"
 import Space from "../../common/components/abstract/Space"
-import Tile from "../../common/components/Tile"
 import StatusBox from "../../common/components/StatusBox"
 import { RootStackParamsList } from "../navigation/Navigator"
 import ProgressCircle from 'react-native-progress-circle'
@@ -33,8 +32,8 @@ const Profile = ({ navigation }: Props) => {
 
     const onPressSignOut = async () => {
         try {
-            await signOut();
             goGetStarted();
+            await signOut();
         } catch (error) {
             goGetStarted();
             Alert.alert(`Failed to sign out: ${error.message}`);
@@ -58,14 +57,12 @@ const Profile = ({ navigation }: Props) => {
             >
                 <View style={styles.innerContainer}>
                     <Space.V s={20} />
-                    <Button onPress={onPressSignOut} title="Sign Out" />
-                    <Space.V s={20} />
                     <Button onPress={onPressSeeData} title="See Data" />
                     <Space.V s={20} />
                     <View style={styles.profilePicture}></View>
                     <Space.V s={10} />
                     <Space.V s={10} />
-                    <Text style={styles.title}>My Trees</Text>
+                    <Text style={styles.title}>Hello!</Text>
                     <Space.V s={10} />
                     <View style={styles.todoitemcontainer}>
                         <StatusBox text="Emergency Acc." goTo="EmergencyAccount" status={progress.hasNotStarted} />
@@ -84,6 +81,8 @@ const Profile = ({ navigation }: Props) => {
                         <StatusBox text="Retirement" goTo="kPlans" status={progress.hasNotStarted} />
                         <StatusBox text="Savings Acc." status={progress.hasNotStarted} />
                     </View>
+                    <Button onPress={onPressSignOut} title="Sign Out" />
+                    <Space.V s={20} />
                 </View>
             </ScrollView>
         </View>

@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, Button, Alert } from "react-native";
+import { View, Text, TextInput, Button, Alert, StyleSheet, Dimensions } from "react-native";
+import Space from "../../common/components/abstract/Space"
+import { Colors } from "react-native/Libraries/NewAppScreen"
 import { useAuth } from "../../providers/AuthProvider";
-// import styles from "../stylesheet";
+
+var width = Dimensions.get('window').width;
+var height = Dimensions.get('window').height;
 
 export function WelcomeView({ navigation }) {
     const [email, setEmail] = useState("");
@@ -47,27 +51,56 @@ export function WelcomeView({ navigation }) {
     };
 
     return (
-        <View>
-            <Text>Signup or Signin:</Text>
-            <View>
+        <View style={styles.container}>
+            <Text style={styles.text}>Test App</Text>
+            <Space.V s={10} />
+            <View style={styles.inputContainer}>
                 <TextInput
                     onChangeText={setEmail}
                     value={email}
                     placeholder="email"
+                    style={styles.inputStyle}
                     autoCapitalize="none"
                 />
             </View>
-            <View>
+            <View style={styles.inputContainer}>
                 <TextInput
                     onChangeText={(text) => setPassword(text)}
                     value={password}
                     placeholder="password"
+                    style={styles.inputStyle}
                     secureTextEntry
                 />
             </View>
+            <Space.V s={10} />
             <Button onPress={onPressSignIn} title="Sign In" />
             <Button onPress={onPressSignUp} title="Sign Up" />
             <Button onPress={onPressSignOut} title="Sign Out" />
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        width,
+        backgroundColor: Colors.lighter,
+        justifyContent: "center",
+        flex: 1,
+        alignItems: "center",
+    },
+    inputContainer: {
+        padding: 5,
+        width,
+    },
+    inputStyle: {
+        borderColor: "black",
+        borderWidth: 1,
+        padding: 10,
+        borderRadius: 2,
+    },
+    text: {
+        fontSize: 30,
+        fontWeight: '900',
+        color: 'grey',
+    },
+})
