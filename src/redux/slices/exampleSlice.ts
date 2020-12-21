@@ -5,36 +5,35 @@ import { map, withLatestFrom } from 'rxjs/operators'
 import { RootStoreType } from "../rootReducer"
 import { MyEpic } from "../store"
 
-type ExampleReducer = {
-    globalValue: 'PING' | 'PONG'
+type UserReducer = {
+    globalValue: any
 }
 
-const initialState: ExampleReducer = {
-    globalValue: 'PING'
+const initialState: UserReducer = {
+    globalValue: {}
 }
 
-const exampleSlice = createSlice({
-    name: "example",
+const userSlice = createSlice({
+    name: "userInfo",
     initialState,
     reducers: {
-        ping: (state) => { state.globalValue = 'PING' },
-        pong: (state) => { state.globalValue = 'PONG' },
+        set: (state, action) => { state.globalValue = action.payload }
     },
 })
 
 
 const exampleEpic: MyEpic = (action$: Observable<PayloadAction<undefined>>, state$: Observable<RootStoreType>) =>
     action$.pipe(
-        ofType(exampleActions.ping.type, exampleActions.pong.type),
+        ofType(userActions.set.type),
         withLatestFrom(state$),
         map(([action, state]) => {
-            console.log(`exampleEpic: I am reacting to ${state.example.globalValue}`)
+            console.log(`exampleEpic: I am reacting to ${state.userInfo.globalValue}`)
 
             // Epics are a stream of actions-in, actions-out
             return { type: 'useless_action' }
         })
     )
 
-export const exampleReducer = exampleSlice.reducer
-export const exampleActions = exampleSlice.actions
+export const userReducer = userSlice.reducer
+export const userActions = userSlice.actions
 export const exampleEpics = [exampleEpic]

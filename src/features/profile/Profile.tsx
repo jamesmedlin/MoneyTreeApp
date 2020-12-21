@@ -15,6 +15,9 @@ import StatusBox from "../../common/components/StatusBox"
 import { RootStackParamsList } from "../navigation/Navigator"
 import ProgressCircle from 'react-native-progress-circle'
 import { useAuth } from "../../providers/AuthProvider";
+import { useDispatch, useSelector } from "react-redux"
+import { userActions } from "../../redux/slices/exampleSlice"
+import { RootStoreType } from "../../redux/rootReducer"
 
 
 enum progress { hasNotStarted, inProgress, complete }
@@ -29,8 +32,16 @@ interface Props {
 const Profile = ({ navigation }: Props) => {
     const { signOut, user } = useAuth();
     function goGetStarted() { navigation.navigate("WelcomeView") }
+    const dispatch = useDispatch()
+    if (user) {
+        dispatch(userActions.set(user.customData))
+        const globalValue = useSelector(
+            (state: RootStoreType) => state.userInfo.globalValue
+        )
+        console.log("SET", globalValue)
+    }
 
-    const onPressSignOut = async () => {
+    async function onPressSignOut() {
         try {
             goGetStarted();
             await signOut();
@@ -81,7 +92,7 @@ const Profile = ({ navigation }: Props) => {
                         <StatusBox text="Retirement" goTo="kPlans" status={progress.hasNotStarted} />
                         <StatusBox text="Savings Acc." status={progress.hasNotStarted} />
                     </View>
-                    <Button onPress={onPressSignOut} title="Sign Out" />
+                    <Button onPress={() => onPressSignOut()} title="Sign Out" />
                     <Space.V s={20} />
                 </View>
             </ScrollView>
