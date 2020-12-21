@@ -1,0 +1,34 @@
+{
+    "collection": "User",
+    "database": "application",
+    "id": "5fc1a7132f3471ab2852b6e1",
+    "roles": [
+        {
+            "name": "default",
+            "apply_when": {},
+            "insert": true,
+            "delete": true,
+            "search": true,
+            "additional_fields": {}
+        }
+    ],
+    "schema": {
+        "properties": {
+            "_id": {
+                "bsonType": "string"
+            },
+            "_partition": {
+                "bsonType": "string"
+            },
+            "name": {
+                "bsonType": "string"
+            }
+        },
+        "required": [
+            "_id",
+            "_partition",
+            "name"
+        ],
+        "title": "User"
+    }
+}

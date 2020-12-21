@@ -12,7 +12,9 @@ import Categories from "../categories/Categories"
 import Profile from "../profile/Profile"
 import kPlans from "../kPlans/kPlans"
 import EmergencyAccount from "../emergencyAccount/EmergencyAccount"
+import { WelcomeView } from "../welcome/WelcomeView"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { AuthProvider } from "../../providers/AuthProvider";
 
 export type RootStackParamsList = {
   Home: undefined
@@ -21,14 +23,16 @@ export type RootStackParamsList = {
   Profile: undefined
   kPlans: undefined
   EmergencyAccount: undefined
+  WelcomeView: undefined
 }
 
 const Stack = createStackNavigator<RootStackParamsList>();
 const Tab = createBottomTabNavigator();
 
 export function ProfileStackScreen() {
-  return (<Stack.Navigator initialRouteName="Profile">
+  return (<Stack.Navigator initialRouteName="WelcomeView">
     <Stack.Screen name="Profile" component={Profile} />
+    <Stack.Screen name="WelcomeView" component={WelcomeView} />
     <Stack.Screen name="Home" component={Home} />
     <Stack.Screen name="Landing" component={Landing} />
     <Stack.Screen name="kPlans" component={kPlans} />
@@ -49,12 +53,14 @@ function Navigator() {
     }
   }, [])
   return (
-    <NavigationContainer ref={navigationRef}>
-      <Tab.Navigator initialRouteName="Profile">
-        <Tab.Screen name="Profile" component={ProfileStackScreen} />
-        <Stack.Screen name="Categories" component={Categories} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer ref={navigationRef}>
+        <Tab.Navigator initialRouteName="Profile">
+          <Tab.Screen name="Profile" component={ProfileStackScreen} />
+          <Stack.Screen name="Categories" component={Categories} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </AuthProvider>
   )
 }
 
