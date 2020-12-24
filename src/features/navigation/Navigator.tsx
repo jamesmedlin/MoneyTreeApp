@@ -2,6 +2,7 @@ import SplashScreen from "react-native-bootsplash"
 import { NavigationContainer, TabActions } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import React, { useEffect } from "react"
+import { Provider } from 'react-redux';
 import {
   isMountedRef,
   navigationRef,
@@ -10,19 +11,16 @@ import Home from "../home/Home"
 import Landing from "../landing/Landing"
 import Categories from "../categories/Categories"
 import Profile from "../profile/Profile"
-import kPlans from "../kPlans/kPlans"
-import EmergencyAccount from "../emergencyAccount/EmergencyAccount"
 import { WelcomeView } from "../welcome/WelcomeView"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AuthProvider } from "../../providers/AuthProvider";
+import store from "../../redux/store"
 
 export type RootStackParamsList = {
   Home: undefined
   Landing: undefined
   Categories: undefined
   Profile: undefined
-  kPlans: undefined
-  EmergencyAccount: undefined
   WelcomeView: undefined
 }
 
@@ -30,14 +28,20 @@ const Stack = createStackNavigator<RootStackParamsList>();
 const Tab = createBottomTabNavigator();
 
 export function ProfileStackScreen() {
-  return (<Stack.Navigator initialRouteName="WelcomeView">
-    <Stack.Screen name="Profile" component={Profile} />
-    <Stack.Screen name="WelcomeView" component={WelcomeView} />
+  return (<Stack.Navigator initialRouteName="Profile">
+    <Stack.Screen name="Profile" component={Profile} options={{ headerLeft: null }} />
     <Stack.Screen name="Home" component={Home} />
     <Stack.Screen name="Landing" component={Landing} />
-    <Stack.Screen name="kPlans" component={kPlans} />
-    <Stack.Screen name="EmergencyAccount" component={EmergencyAccount} />
   </Stack.Navigator>)
+}
+
+export function TabNavigator() {
+  return (
+    <Tab.Navigator initialRouteName="Profile">
+      <Tab.Screen name="Profile" component={ProfileStackScreen} options={{ headerBackTitleVisible: false }} />
+      <Stack.Screen name="Categories" component={Categories} />
+    </Tab.Navigator>
+  )
 }
 
 function Navigator() {
@@ -54,12 +58,14 @@ function Navigator() {
   }, [])
   return (
     <AuthProvider>
-      <NavigationContainer ref={navigationRef}>
-        <Tab.Navigator initialRouteName="Profile">
-          <Tab.Screen name="Profile" component={ProfileStackScreen} />
-          <Stack.Screen name="Categories" component={Categories} />
-        </Tab.Navigator>
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer ref={navigationRef}>
+          <Stack.Navigator initialRouteName="WelcomeView">
+            <Stack.Screen name="WelcomeView" component={WelcomeView} />
+            <Tab.Screen name="Profile" component={TabNavigator} options={{ headerShown: false, gestureEnabled: false }} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
     </AuthProvider>
   )
 }

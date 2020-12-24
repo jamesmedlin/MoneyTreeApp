@@ -11,9 +11,7 @@ import {
 } from "react-native"
 import { Colors } from "react-native/Libraries/NewAppScreen"
 import Space from "../../common/components/abstract/Space"
-import StatusBox from "../../common/components/StatusBox"
 import { RootStackParamsList } from "../navigation/Navigator"
-import ProgressCircle from 'react-native-progress-circle'
 import { useAuth } from "../../providers/AuthProvider";
 import { useDispatch, useSelector } from "react-redux"
 import { userActions } from "../../redux/slices/exampleSlice"
@@ -75,23 +73,6 @@ const Profile = ({ navigation }: Props) => {
                     <Space.V s={10} />
                     <Text style={styles.title}>Hello!</Text>
                     <Space.V s={10} />
-                    <View style={styles.todoitemcontainer}>
-                        <StatusBox text="Emergency Acc." goTo="EmergencyAccount" status={progress.hasNotStarted} />
-                        <StatusBox text="Credit Score">
-                            <View style={styles.creditScore}>
-                                <ProgressCircle
-                                    percent={100 * 440 / 550}
-                                    radius={50}
-                                    borderWidth={15}
-                                    color="#90EE90"
-                                    shadowColor="white"
-                                    bgColor="white"><Text style={styles.text}>740</Text></ProgressCircle>
-                            </View>
-                        </StatusBox>
-                        <StatusBox text="Insurance" status={progress.hasNotStarted} />
-                        <StatusBox text="Retirement" goTo="kPlans" status={progress.hasNotStarted} />
-                        <StatusBox text="Savings Acc." status={progress.hasNotStarted} />
-                    </View>
                     <Button onPress={() => onPressSignOut()} title="Sign Out" />
                     <Space.V s={20} />
                 </View>

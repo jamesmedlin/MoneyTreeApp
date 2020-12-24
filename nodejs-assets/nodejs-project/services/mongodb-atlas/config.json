@@ -19,7 +19,11 @@
                                 "%%user.id": "%%partition"
                             },
                             {
-                                "%%user.custom_data.shared": "%%partition"
+                                "%%user.custom_data.canReadPartitions": {
+                                    "$in": [
+                                        "%%partition"
+                                    ]
+                                }
                             }
                         ]
                     },

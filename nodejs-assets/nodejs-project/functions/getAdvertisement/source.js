@@ -3,5 +3,14 @@ exports = async function () {
   const collection = cluster.db("application").collection("Advertisement");
   const caller = context.user;
 
-  return await collection.findOne({ viewers: { $nin: caller.id}})
+  // return await collection.insertOne({
+  //   "_id": "stringid",
+  //   "name": "exampleAd",
+  //   "_partition": "PUBLIC",
+  //   "quiz": ['hi', 'hello', 'bye'],
+  //   "uri": "oohyeahhhh",
+  //   "viewers": [""],
+  // })
+  const ad = await collection.findOne({ "viewers": { "$nin": [caller.id]}});
+  return ad;
 };

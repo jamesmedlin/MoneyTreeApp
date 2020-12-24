@@ -6,6 +6,6 @@ exports = async function createNewUserDocument({ user }) {
         _id: user.id,
         _partition: `user=${user.id}`,
         name: user.data.email,
-        canReadPartitions: [`user=${user.id}`],
+        canReadPartitions: [`user=${user.id}`, `PUBLIC`],
     }, { unique: true });
 };
