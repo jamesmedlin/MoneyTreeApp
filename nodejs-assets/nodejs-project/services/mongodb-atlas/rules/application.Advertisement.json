@@ -13,6 +13,7 @@
         }
     ],
     "schema": {
+        "bsonType": "object",
         "properties": {
             "_id": {
                 "bsonType": "string"
@@ -20,7 +21,13 @@
             "_partition": {
                 "bsonType": "string"
             },
+            "correctAnswer": {
+                "bsonType": "string"
+            },
             "name": {
+                "bsonType": "string"
+            },
+            "question": {
                 "bsonType": "string"
             },
             "quiz": {

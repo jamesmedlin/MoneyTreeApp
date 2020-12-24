@@ -1,50 +1,88 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import {
     StyleSheet,
     View,
     Dimensions,
     Button,
-    Modal,
     Text,
+    Modal,
+    TouchableOpacity
 } from "react-native"
 import Video from "react-native-video"
-import { RootStackParamsList } from "../navigation/Navigator"
+import { useAuth } from "../../providers/AuthProvider";
+import { useIsFocused } from '@react-navigation/native';
 
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
 const Categories = (props) => {
-    let { isPaused, quizActive } = useState(false);
+    const { user } = useAuth();
+    let [buttonSelected, setSelected] = useState("");
+    let [selectedAnswer, setAnswer] = useState("")
+    let [isPaused, setPaused] = useState(false);
+    let [quizActive, setActivation] = useState(false);
+    let [ad, setAdvertisement] = useState(null);
+    let focused = useIsFocused();
 
-    // const Categories = ({ navigation, currVideo }: Props) => {
-    function goLanding() { this.props.navigation.navigate("Landing") }
+    useEffect(() => {
 
-    function pauseVideo() {
-        isPaused = !isPaused;
+    }, [ad, buttonSelected])
+
+
+    async function verifyAnswers() {
+        if (selectedAnswer) {
+            console.log("SELECTED ANSWER", selectedAnswer)
+            console.log("CORRECT ANSWER", ad.correctAnswer)
+            if (selectedAnswer === ad.correctAnswer) {
+                let response = await user.functions.confirmView(ad._id);
+            }
+            let advert = await user.functions.getAdvertisement();
+            if (advert) {
+                setAdvertisement(advert);
+                console.log("NEW URI", ad.uri)
+            }
+            setActivation(false);
+            setAnswer("")
+        } else {
+        }
     }
 
-    function verifyAnswers() {
+    async function startWatching() {
+        let advert = await user.functions.getAdvertisement();
+        if (advert) {
+            setAdvertisement(advert);
+            console.log("NEW URI", ad.uri)
+        }
+
     }
 
-    function callQuiz() {
-        this.setState({ quizActive: true });
+    async function callQuiz() {
+        setActivation(true);
     }
 
-    function nextAdvertisement() {
-    }
-
-    nextAdvertisement();
     return (
-        <View style={styles.innerContainer}>
-            <Video source={{ uri: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" }}// this.state.advertisement.uri }}
-                controls={true} style={styles.video} resizeMode={'cover'} paused={this.state.isPaused} onEnd={() => callQuiz()} />
-            {quizActive && <Modal style={styles.modal} animationType='slide' onDismiss={() => verifyAnswers()}>
-            </Modal>}
-            <Button onPress={() => pauseVideo()} title="Pause" />
-            <Button onPress={() => nextAdvertisement()} title="Next Video" />
-        </View>
+        <View style={styles.innerContainer} >
+            {ad ? <Video source={{ uri: ad.uri }}
+                controls={false} style={styles.video} resizeMode={'cover'} paused={isPaused || !focused} onEnd={() => callQuiz()} /> : null}
+            {
+                quizActive &&
+                <Modal style={styles.modal} animationType='slide' presentationStyle="pageSheet">
+                    <Text>{ad.question}</Text>
+                    <View style={styles.choicesContainer}>
+                        <TouchableOpacity onPress={() => setAnswer(ad.quiz[0])} style={styles.choices}><Text>{`${ad.quiz[0]}`}</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={() => setAnswer(ad.quiz[1])} style={styles.choices}><Text>{`${ad.quiz[1]}`}</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={() => setAnswer(ad.quiz[2])} style={styles.choices}><Text>{`${ad.quiz[2]}`}</Text></TouchableOpacity>
+                        <Button onPress={() => verifyAnswers()} title="Submit" />
+                    </View>
+                </Modal>
+            }
+            {
+                ad ? <Button onPress={() => setPaused(!isPaused)} title="Play/Pause" /> :
+                    <Button onPress={() => startWatching()} title="Start watching!" />
+            }
+        </View >
     )
 }
 
@@ -85,9 +123,17 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
     },
-    modal: {
-        height: 200,
-        width: 200,
+    choicesContainer: {
+        alignItems: "center",
+    },
+    choices: {
+        alignItems: "flex-start",
+        width: width - 40,
+        height: 40,
+        borderColor: "grey",
+        borderRadius: 10,
+        borderWidth: 1.5,
+        marginBottom: 10,
     },
 })
 
