@@ -21,7 +21,13 @@
             "_partition": {
                 "bsonType": "string"
             },
+            "correctAnswer": {
+                "bsonType": "string"
+            },
             "name": {
+                "bsonType": "string"
+            },
+            "question": {
                 "bsonType": "string"
             },
             "quiz": {

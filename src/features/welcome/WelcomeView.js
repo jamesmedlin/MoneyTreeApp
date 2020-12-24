@@ -8,6 +8,7 @@ var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
 export function WelcomeView({ navigation }) {
+    const [loginScreen, setScreen] = useState(true)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const { user, signUp, signOut, signIn } = useAuth();
@@ -17,7 +18,7 @@ export function WelcomeView({ navigation }) {
         if (user != null) {
             navigation.navigate("Profile");
         }
-    }, [user]);
+    }, [user, loginScreen]);
 
     // The onPressSignIn method calls AuthProvider.signIn with the
     // email/password in state.
@@ -25,6 +26,7 @@ export function WelcomeView({ navigation }) {
         console.log("Press sign in");
         try {
             await signIn(email, password);
+            setScreen(true);
         } catch (error) {
             Alert.alert(`Failed to sign in: ${error.message}`);
         }
@@ -36,23 +38,15 @@ export function WelcomeView({ navigation }) {
         try {
             await signUp(email, password);
             signIn(email, password);
+            setScreen(true);
         } catch (error) {
             Alert.alert(`Failed to sign up: ${error.message}`);
         }
     };
 
-
-    const onPressSignOut = async () => {
-        try {
-            await signOut();
-        } catch (error) {
-            Alert.alert(`Failed to sign out: ${error.message}`);
-        }
-    };
-
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Test App</Text>
+            <Text style={styles.text}>{loginScreen ? "Test App Sign In" : "Test App Sign Up"}</Text>
             <Space.V s={10} />
             <View style={styles.inputContainer}>
                 <TextInput
@@ -73,9 +67,9 @@ export function WelcomeView({ navigation }) {
                 />
             </View>
             <Space.V s={10} />
-            <Button onPress={onPressSignIn} title="Sign In" />
-            <Button onPress={onPressSignUp} title="Sign Up" />
-            <Button onPress={onPressSignOut} title="Sign Out" />
+            {loginScreen ? <Button onPress={onPressSignIn} title="Sign In" /> : <Button onPress={onPressSignUp} title="Sign Up" /> }
+            {loginScreen ? <Button onPress={() => setScreen(false)} title="Create Account" /> :
+                <Button onPress={() => setScreen(true)} title="Go back to Sign In" />}
         </View>
     );
 }

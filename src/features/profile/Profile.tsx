@@ -11,9 +11,7 @@ import {
 } from "react-native"
 import { Colors } from "react-native/Libraries/NewAppScreen"
 import Space from "../../common/components/abstract/Space"
-import StatusBox from "../../common/components/StatusBox"
 import { RootStackParamsList } from "../navigation/Navigator"
-import ProgressCircle from 'react-native-progress-circle'
 import { useAuth } from "../../providers/AuthProvider";
 
 

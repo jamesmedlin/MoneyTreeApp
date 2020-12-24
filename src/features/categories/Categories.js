@@ -6,13 +6,12 @@ import {
     Dimensions,
     Button,
     Text,
-    Modal
+    Modal,
+    TouchableOpacity
 } from "react-native"
 import Video from "react-native-video"
-import { RootStackParamsList } from "../navigation/Navigator"
-import { statement } from "@babel/template"
-import store from "../../redux/store"
 import { useAuth } from "../../providers/AuthProvider";
+import { useIsFocused } from '@react-navigation/native';
 
 
 var width = Dimensions.get('window').width;
@@ -20,16 +19,37 @@ var height = Dimensions.get('window').height;
 
 const Categories = (props) => {
     const { user } = useAuth();
+    let [buttonSelected, setSelected] = useState("");
+    let [selectedAnswer, setAnswer] = useState("")
     let [isPaused, setPaused] = useState(false);
     let [quizActive, setActivation] = useState(false);
     let [ad, setAdvertisement] = useState(null);
+    let focused = useIsFocused();
 
     useEffect(() => {
 
-    }, [ad])
+    }, [ad, buttonSelected])
+
 
     async function verifyAnswers() {
-        setActivation(false);
+        if (selectedAnswer) {
+            console.log("SELECTED ANSWER", selectedAnswer)
+            console.log("CORRECT ANSWER", ad.correctAnswer)
+            if (selectedAnswer === ad.correctAnswer) {
+                let response = await user.functions.confirmView(ad._id);
+            }
+            let advert = await user.functions.getAdvertisement();
+            if (advert) {
+                setAdvertisement(advert);
+                console.log("NEW URI", ad.uri)
+            }
+            setActivation(false);
+            setAnswer("")
+        } else {
+        }
+    }
+
+    async function startWatching() {
         let advert = await user.functions.getAdvertisement();
         if (advert) {
             setAdvertisement(advert);
@@ -39,29 +59,30 @@ const Categories = (props) => {
     }
 
     async function callQuiz() {
-        const response = await user.functions.confirmView(ad._id);
-        setActivation(!quizActive);
+        setActivation(true);
     }
 
     return (
         <View style={styles.innerContainer} >
             {ad ? <Video source={{ uri: ad.uri }}
-                controls={false} style={styles.video} resizeMode={'cover'} paused={isPaused} onEnd={() => callQuiz()} /> : null}
+                controls={false} style={styles.video} resizeMode={'cover'} paused={isPaused || !focused} onEnd={() => callQuiz()} /> : null}
             {
                 quizActive &&
                 <Modal style={styles.modal} animationType='slide' presentationStyle="pageSheet">
-                    <View>
-                        <Text>Question...</Text>
-                        <Text>A1:{ad.quiz[0]} </Text>
-                        <Text>A2: {ad.quiz[1]}</Text>
-                        <Text>A3: {ad.quiz[2]}</Text>
+                    <Text>{ad.question}</Text>
+                    <View style={styles.choicesContainer}>
+                        <TouchableOpacity onPress={() => setAnswer(ad.quiz[0])} style={styles.choices}><Text>{`${ad.quiz[0]}`}</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={() => setAnswer(ad.quiz[1])} style={styles.choices}><Text>{`${ad.quiz[1]}`}</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={() => setAnswer(ad.quiz[2])} style={styles.choices}><Text>{`${ad.quiz[2]}`}</Text></TouchableOpacity>
                         <Button onPress={() => verifyAnswers()} title="Submit" />
                     </View>
                 </Modal>
             }
-            {ad ? <Button onPress={() => setPaused(!isPaused)} title="Play/Pause" /> :
-                <Button onPress={() => verifyAnswers()} title="Start watching!" />}
-        </View>
+            {
+                ad ? <Button onPress={() => setPaused(!isPaused)} title="Play/Pause" /> :
+                    <Button onPress={() => startWatching()} title="Start watching!" />
+            }
+        </View >
     )
 }
 
@@ -102,9 +123,17 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
     },
-    modal: {
-        backgroundColor: 'blue',
-        height: "100px",
+    choicesContainer: {
+        alignItems: "center",
+    },
+    choices: {
+        alignItems: "flex-start",
+        width: width - 40,
+        height: 40,
+        borderColor: "grey",
+        borderRadius: 10,
+        borderWidth: 1.5,
+        marginBottom: 10,
     },
 })
 
