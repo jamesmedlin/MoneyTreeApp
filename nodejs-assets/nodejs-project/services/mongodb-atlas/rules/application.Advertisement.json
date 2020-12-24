@@ -13,6 +13,7 @@
         }
     ],
     "schema": {
+        "bsonType": "object",
         "properties": {
             "_id": {
                 "bsonType": "string"

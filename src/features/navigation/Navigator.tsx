@@ -2,6 +2,7 @@ import SplashScreen from "react-native-bootsplash"
 import { NavigationContainer, TabActions } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import React, { useEffect } from "react"
+import { Provider } from 'react-redux';
 import {
   isMountedRef,
   navigationRef,
@@ -15,6 +16,7 @@ import EmergencyAccount from "../emergencyAccount/EmergencyAccount"
 import { WelcomeView } from "../welcome/WelcomeView"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AuthProvider } from "../../providers/AuthProvider";
+import store from "../../redux/store"
 
 export type RootStackParamsList = {
   Home: undefined
@@ -54,12 +56,14 @@ function Navigator() {
   }, [])
   return (
     <AuthProvider>
-      <NavigationContainer ref={navigationRef}>
-        <Tab.Navigator initialRouteName="Profile">
-          <Tab.Screen name="Profile" component={ProfileStackScreen} />
-          <Stack.Screen name="Categories" component={Categories} />
-        </Tab.Navigator>
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer ref={navigationRef}>
+          <Tab.Navigator initialRouteName="Profile">
+            <Tab.Screen name="Profile" component={ProfileStackScreen} />
+            <Stack.Screen name="Categories" component={Categories} />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </Provider>
     </AuthProvider>
   )
 }

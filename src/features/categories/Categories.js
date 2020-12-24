@@ -1,49 +1,66 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import {
     StyleSheet,
     View,
     Dimensions,
     Button,
-    Modal,
     Text,
+    Modal
 } from "react-native"
 import Video from "react-native-video"
 import { RootStackParamsList } from "../navigation/Navigator"
+import { statement } from "@babel/template"
+import store from "../../redux/store"
+import { useAuth } from "../../providers/AuthProvider";
 
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
 const Categories = (props) => {
-    let { isPaused, quizActive } = useState(false);
+    const { user } = useAuth();
+    let [isPaused, setPaused] = useState(false);
+    let [quizActive, setActivation] = useState(false);
+    let [ad, setAdvertisement] = useState(null);
 
-    // const Categories = ({ navigation, currVideo }: Props) => {
-    function goLanding() { this.props.navigation.navigate("Landing") }
+    useEffect(() => {
 
-    function pauseVideo() {
-        isPaused = !isPaused;
+    }, [ad])
+
+    async function verifyAnswers() {
+        setActivation(false);
+        let advert = await user.functions.getAdvertisement();
+        if (advert) {
+            setAdvertisement(advert);
+            console.log("NEW URI", ad.uri)
+        }
+
     }
 
-    function verifyAnswers() {
+    async function callQuiz() {
+        const response = await user.functions.confirmView(ad._id);
+        setActivation(!quizActive);
     }
 
-    function callQuiz() {
-        this.setState({ quizActive: true });
-    }
-
-    function nextAdvertisement() {
-    }
-
-    nextAdvertisement();
     return (
-        <View style={styles.innerContainer}>
-            <Video source={{ uri: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" }}// this.state.advertisement.uri }}
-                controls={true} style={styles.video} resizeMode={'cover'} paused={this.state.isPaused} onEnd={() => callQuiz()} />
-            {quizActive && <Modal style={styles.modal} animationType='slide' onDismiss={() => verifyAnswers()}>
-            </Modal>}
-            <Button onPress={() => pauseVideo()} title="Pause" />
-            <Button onPress={() => nextAdvertisement()} title="Next Video" />
+        <View style={styles.innerContainer} >
+            {ad ? <Video source={{ uri: ad.uri }}
+                controls={false} style={styles.video} resizeMode={'cover'} paused={isPaused} onEnd={() => callQuiz()} /> : null}
+            {
+                quizActive &&
+                <Modal style={styles.modal} animationType='slide' presentationStyle="pageSheet">
+                    <View>
+                        <Text>Question...</Text>
+                        <Text>A1:{ad.quiz[0]} </Text>
+                        <Text>A2: {ad.quiz[1]}</Text>
+                        <Text>A3: {ad.quiz[2]}</Text>
+                        <Button onPress={() => verifyAnswers()} title="Submit" />
+                    </View>
+                </Modal>
+            }
+            {ad ? <Button onPress={() => setPaused(!isPaused)} title="Play/Pause" /> :
+                <Button onPress={() => verifyAnswers()} title="Start watching!" />}
         </View>
     )
 }
@@ -86,8 +103,8 @@ const styles = StyleSheet.create({
         height: 100,
     },
     modal: {
-        height: 200,
-        width: 200,
+        backgroundColor: 'blue',
+        height: "100px",
     },
 })
 
