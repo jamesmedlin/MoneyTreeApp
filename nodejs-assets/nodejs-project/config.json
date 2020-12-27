@@ -5,6 +5,10 @@
     "location": "US-VA",
     "deployment_model": "GLOBAL",
     "security": {},
+    "hosting": {
+        "enabled": false,
+        "app_default_domain": "application-yytjm.mongodbstitch.com"
+    },
     "custom_user_data_config": {
         "enabled": true,
         "mongo_service_name": "mongodb-atlas",

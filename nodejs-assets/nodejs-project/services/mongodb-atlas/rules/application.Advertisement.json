@@ -45,6 +45,9 @@
                 "items": {
                     "bsonType": "string"
                 }
+            },
+            "website": {
+                "bsonType": "string"
             }
         },
         "required": [
