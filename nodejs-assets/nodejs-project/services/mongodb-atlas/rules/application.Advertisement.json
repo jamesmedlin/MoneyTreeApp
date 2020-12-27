@@ -24,6 +24,15 @@
             "correctAnswer": {
                 "bsonType": "string"
             },
+            "cpcv": {
+                "bsonType": "double"
+            },
+            "dailyBudget": {
+                "bsonType": "double"
+            },
+            "isActive": {
+                "bsontype": "bool"
+            },
             "name": {
                 "bsonType": "string"
             },
@@ -36,6 +45,9 @@
                     "bsonType": "string"
                 },
                 "maxItems": 3
+            },
+            "totalOwed": {
+                "bsonType": "double"
             },
             "uri": {
                 "bsonType": "string"

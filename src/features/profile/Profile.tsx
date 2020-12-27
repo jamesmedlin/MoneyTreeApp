@@ -1,5 +1,5 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import React from "react"
+import React, { useEffect } from "react"
 import {
     ScrollView,
     StyleSheet,
@@ -13,6 +13,7 @@ import { Colors } from "react-native/Libraries/NewAppScreen"
 import Space from "../../common/components/abstract/Space"
 import { RootStackParamsList } from "../navigation/Navigator"
 import { useAuth } from "../../providers/AuthProvider";
+import { useIsFocused } from '@react-navigation/native';
 
 
 enum progress { hasNotStarted, inProgress, complete }
@@ -25,8 +26,12 @@ interface Props {
 }
 
 const Profile = ({ navigation }: Props) => {
-    const { signOut, user } = useAuth();
+    let { signOut, user } = useAuth();
     function goGetStarted() { navigation.navigate("WelcomeView") }
+    let focused = useIsFocused();
+
+    useEffect(() => {
+    }, [focused])
 
     const onPressSignOut = async () => {
         try {
@@ -61,6 +66,8 @@ const Profile = ({ navigation }: Props) => {
                     <Space.V s={10} />
                     <Space.V s={10} />
                     <Text style={styles.title}>Hello!</Text>
+                    <Space.V s={10} />
+                    <Text style={styles.title}>Your balance is: ${user.customData.balance}</Text>
                     <Space.V s={10} />
                     <Button onPress={() => onPressSignOut()} title="Sign Out" />
                     <Space.V s={20} />
