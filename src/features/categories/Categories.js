@@ -14,8 +14,6 @@ import { WebView } from "react-native-webview";
 import Video from "react-native-video";
 import { useAuth } from "../../providers/AuthProvider";
 import { useIsFocused } from '@react-navigation/native';
-import { set } from "react-native-reanimated";
-import { TouchEventBoundary } from "@sentry/react-native";
 
 
 var width = Dimensions.get('window').width;
@@ -32,14 +30,15 @@ const Categories = (props) => {
     let [webpage, setWebpage] = useState(false);
 
     useEffect(() => {
-
     }, [ad, buttonSelected])
 
 
     async function verifyAnswers() {
         if (selectedAnswer) {
             if (selectedAnswer === ad.correctAnswer) {
-                let response = await user.functions.confirmView(ad._id);
+                let userRefreshed = await user.refreshCustomData()
+                let response = await user.functions.confirmView(ad, userRefreshed);
+                userRefreshed = await user.refreshCustomData()
             } else {
                 setAdvertisement(null);
             }
@@ -95,12 +94,12 @@ const Categories = (props) => {
                 <Modal style={styles.modal} animationType='slide' presentationStyle="pageSheet">
                     <Text>{ad.question}</Text>
                     <View style={styles.choicesContainer}>
-                        {selectedAnswer == ad.quiz[0] ? <TouchableOpacity onPress={() => setAnswer(ad.quiz[0])} style={styles.choicesSelected}><Text>{`${ad.quiz[0]}`}</Text></TouchableOpacity> 
-                        : <TouchableOpacity onPress={() => setAnswer(ad.quiz[0])} style={styles.choices}><Text>{`${ad.quiz[0]}`}</Text></TouchableOpacity>}
-                        {selectedAnswer == ad.quiz[1] ? <TouchableOpacity onPress={() => setAnswer(ad.quiz[1])} style={styles.choicesSelected}><Text>{`${ad.quiz[1]}`}</Text></TouchableOpacity> 
-                        : <TouchableOpacity onPress={() => setAnswer(ad.quiz[1])} style={styles.choices}><Text>{`${ad.quiz[1]}`}</Text></TouchableOpacity>}
-                        {selectedAnswer == ad.quiz[2] ? <TouchableOpacity onPress={() => setAnswer(ad.quiz[2])} style={styles.choicesSelected}><Text>{`${ad.quiz[2]}`}</Text></TouchableOpacity> 
-                        : <TouchableOpacity onPress={() => setAnswer(ad.quiz[2])} style={styles.choices}><Text>{`${ad.quiz[2]}`}</Text></TouchableOpacity>}
+                        {selectedAnswer == ad.quiz[0] ? <TouchableOpacity onPress={() => setAnswer(ad.quiz[0])} style={styles.choicesSelected}><Text>{`${ad.quiz[0]}`}</Text></TouchableOpacity>
+                            : <TouchableOpacity onPress={() => setAnswer(ad.quiz[0])} style={styles.choices}><Text>{`${ad.quiz[0]}`}</Text></TouchableOpacity>}
+                        {selectedAnswer == ad.quiz[1] ? <TouchableOpacity onPress={() => setAnswer(ad.quiz[1])} style={styles.choicesSelected}><Text>{`${ad.quiz[1]}`}</Text></TouchableOpacity>
+                            : <TouchableOpacity onPress={() => setAnswer(ad.quiz[1])} style={styles.choices}><Text>{`${ad.quiz[1]}`}</Text></TouchableOpacity>}
+                        {selectedAnswer == ad.quiz[2] ? <TouchableOpacity onPress={() => setAnswer(ad.quiz[2])} style={styles.choicesSelected}><Text>{`${ad.quiz[2]}`}</Text></TouchableOpacity>
+                            : <TouchableOpacity onPress={() => setAnswer(ad.quiz[2])} style={styles.choices}><Text>{`${ad.quiz[2]}`}</Text></TouchableOpacity>}
                         <Button onPress={() => verifyAnswers()} title="Submit" />
                     </View>
                 </Modal>
