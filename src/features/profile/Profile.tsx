@@ -13,6 +13,9 @@ import { Colors } from "react-native/Libraries/NewAppScreen"
 import Space from "../../common/components/abstract/Space"
 import { RootStackParamsList } from "../navigation/Navigator"
 import { useAuth } from "../../providers/AuthProvider";
+import { useDispatch, useSelector } from "react-redux"
+import { userActions } from "../../redux/slices/exampleSlice"
+import { RootStoreType } from "../../redux/rootReducer"
 import { useIsFocused } from '@react-navigation/native';
 
 
@@ -28,12 +31,20 @@ interface Props {
 const Profile = ({ navigation }: Props) => {
     let { signOut, user } = useAuth();
     function goGetStarted() { navigation.navigate("WelcomeView") }
+    const dispatch = useDispatch()
+    if (user) {
+        dispatch(userActions.set(user.customData))
+        const globalValue = useSelector(
+            (state: RootStoreType) => state.userInfo.globalValue
+        )
+        console.log("SET", globalValue)
+    }
     let focused = useIsFocused();
 
     useEffect(() => {
     }, [focused])
 
-    const onPressSignOut = async () => {
+    async function onPressSignOut() {
         try {
             goGetStarted();
             await signOut();
