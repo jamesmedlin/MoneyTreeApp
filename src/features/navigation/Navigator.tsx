@@ -7,39 +7,39 @@ import {
   isMountedRef,
   navigationRef,
 } from "../../services/navigation/navigationService"
-import Home from "../home/Home"
-import Landing from "../landing/Landing"
-import Categories from "../categories/Categories"
 import Profile from "../profile/Profile"
+import Landing from "../landing/Landing"
+import Explore from "../explore/Explore"
+import Home from "../home/Home"
 import { WelcomeView } from "../welcome/WelcomeView"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AuthProvider } from "../../providers/AuthProvider";
 import store from "../../redux/store"
 
 export type RootStackParamsList = {
-  Home: undefined
-  Landing: undefined
-  Categories: undefined
   Profile: undefined
+  Landing: undefined
+  Explore: undefined
+  Home: undefined
   WelcomeView: undefined
 }
 
 const Stack = createStackNavigator<RootStackParamsList>();
 const Tab = createBottomTabNavigator();
 
-export function ProfileStackScreen() {
-  return (<Stack.Navigator initialRouteName="Profile">
-    <Stack.Screen name="Profile" component={Profile} options={{ headerLeft: null }} />
-    <Stack.Screen name="Home" component={Home} />
-    <Stack.Screen name="Landing" component={Landing} />
+export function HomeStackScreen() {
+  return (<Stack.Navigator initialRouteName="Home">
+    <Stack.Screen name="Home" component={Home} options={{ headerLeft: null }} />
+    <Stack.Screen name="Profile" component={Profile} />
+    {/* <Stack.Screen name="Landing" component={Landing} /> */}
   </Stack.Navigator>)
 }
 
 export function TabNavigator() {
   return (
-    <Tab.Navigator initialRouteName="Profile">
-      <Tab.Screen name="Profile" component={ProfileStackScreen} options={{ headerBackTitleVisible: false }} />
-      <Stack.Screen name="Categories" component={Categories} />
+    <Tab.Navigator initialRouteName="Home">
+      <Tab.Screen name="Home" component={HomeStackScreen} options={{ headerBackTitleVisible: false }} />
+      <Stack.Screen name="Explore" component={Explore} />
     </Tab.Navigator>
   )
 }
@@ -62,7 +62,7 @@ function Navigator() {
         <NavigationContainer ref={navigationRef}>
           <Stack.Navigator initialRouteName="WelcomeView">
             <Stack.Screen name="WelcomeView" component={WelcomeView} />
-            <Tab.Screen name="Profile" component={TabNavigator} options={{ headerShown: false, gestureEnabled: false }} />
+            <Tab.Screen name="Home" component={TabNavigator} options={{ headerShown: false, gestureEnabled: false }} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
