@@ -5,7 +5,9 @@ exports = async function createNewUserDocument({ user }) {
     return users.insertOne({
         _id: user.id,
         _partition: `user=${user.id}`,
-        name: user.data.email,
+        email: user.data.email,
         canReadPartitions: [`user=${user.id}`, `PUBLIC`],
+        balance: 0.0,
+        totalEarnings: 0.0,
     }, { unique: true });
 };

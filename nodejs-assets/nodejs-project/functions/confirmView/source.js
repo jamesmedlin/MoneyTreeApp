@@ -1,13 +1,16 @@
-exports = async function (advertisement) {
+exports = async function (advertisement, user) {
   const cluster = context.services.get("mongodb-atlas");
   const collection = cluster.db("application").collection("Advertisement");
-  const caller = context.user;
+  const users = cluster.db("application").collection("User");
+  const caller = user
 
   const change = {
-    "$push": { "viewers": caller.id }
+    "$push": { "viewers": caller._id },
+    "$set": { "totalOwed": advertisement.totalOwed + advertisement.cpcv }
   }
-  console.log("ad_id", advertisement)
 
-  const ad = await collection.updateOne({ _id: advertisement }, change);
+  const ad = await collection.updateOne({ _id: advertisement._id }, change);
+  const userQuery = await users.updateOne({ _id: caller._id, _partition: caller._partition }, { $set: { balance: caller.balance + (advertisement.cpcv * 0.90) } });
+
   return ad;
 };
