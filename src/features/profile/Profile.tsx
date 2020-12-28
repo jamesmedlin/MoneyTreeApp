@@ -1,5 +1,5 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import React from "react"
+import React, { useEffect } from "react"
 import {
     ScrollView,
     StyleSheet,
@@ -16,6 +16,7 @@ import { useAuth } from "../../providers/AuthProvider";
 import { useDispatch, useSelector } from "react-redux"
 import { userActions } from "../../redux/slices/exampleSlice"
 import { RootStoreType } from "../../redux/rootReducer"
+import { useIsFocused } from '@react-navigation/native';
 
 
 enum progress { hasNotStarted, inProgress, complete }
@@ -28,7 +29,7 @@ interface Props {
 }
 
 const Profile = ({ navigation }: Props) => {
-    const { signOut, user } = useAuth();
+    let { signOut, user } = useAuth();
     function goGetStarted() { navigation.navigate("WelcomeView") }
     const dispatch = useDispatch()
     if (user) {
@@ -38,6 +39,10 @@ const Profile = ({ navigation }: Props) => {
         )
         console.log("SET", globalValue)
     }
+    let focused = useIsFocused();
+
+    useEffect(() => {
+    }, [focused])
 
     async function onPressSignOut() {
         try {
@@ -72,6 +77,8 @@ const Profile = ({ navigation }: Props) => {
                     <Space.V s={10} />
                     <Space.V s={10} />
                     <Text style={styles.title}>Hello!</Text>
+                    <Space.V s={10} />
+                    <Text style={styles.title}>Your balance is: ${user.customData.balance}</Text>
                     <Space.V s={10} />
                     <Button onPress={() => onPressSignOut()} title="Sign Out" />
                     <Space.V s={20} />
