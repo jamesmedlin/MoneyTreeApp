@@ -21,7 +21,6 @@ var height = Dimensions.get('window').height;
 
 const Explore = (props) => {
     const { user } = useAuth();
-    let [buttonSelected, setSelected] = useState("");
     let [selectedAnswer, setAnswer] = useState("")
     let [isPaused, setPaused] = useState(false);
     let [quizActive, setActivation] = useState(false);
@@ -29,39 +28,49 @@ const Explore = (props) => {
     let focused = useIsFocused();
     let [webpage, setWebpage] = useState(false);
 
+    // updates page component any time the ad is changed 
+    // tells video component to start playing newest ad
     useEffect(() => {
-    }, [ad, buttonSelected])
+    }, [ad])
 
-
+    // verifies the submitted quiz answer
     async function verifyAnswers() {
+        // quiz modal is only dismissed when an answer is selected
         if (selectedAnswer) {
+            // if the answer is correct
             if (selectedAnswer === ad.correctAnswer) {
                 let userRefreshed = await user.refreshCustomData()
                 let response = await user.functions.confirmView(ad, userRefreshed);
                 userRefreshed = await user.refreshCustomData()
             } else {
+                // setting the ad to null allows the hook to catch that the ad has changed
                 setAdvertisement(null);
             }
+            // this retrieves an advertisement for the user to watch
             let advert = await user.functions.getAdvertisement();
+            // if there is another ad for the user to watch
             if (advert) {
                 setAdvertisement(advert);
-                console.log("NEW URI", ad.uri)
             }
+            // dismisses quiz modal
             setActivation(false);
+            // clears previous quiz answer
             setAnswer("")
         } else {
         }
     }
 
+    // retrieves user's first ad of the session
     async function startWatching() {
         let advert = await user.functions.getAdvertisement();
+        // if there is another ad for the user to watch
         if (advert) {
             setAdvertisement(advert);
         }
-
     }
 
-    async function callQuiz() {
+    // calls the quiz modal at the end of the video
+    function callQuiz() {
         setActivation(true);
     }
 

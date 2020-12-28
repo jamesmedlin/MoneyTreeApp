@@ -15,9 +15,6 @@ import { RootStackParamsList } from "../navigation/Navigator"
 import { useAuth } from "../../providers/AuthProvider";
 import { useIsFocused } from '@react-navigation/native';
 
-
-enum progress { hasNotStarted, inProgress, complete }
-
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
@@ -27,22 +24,24 @@ interface Props {
 
 const Home = ({ navigation }: Props) => {
     let { signOut, user } = useAuth();
-    function goGetStarted() { navigation.navigate("WelcomeView") }
+    // determines if this screen is currently being watched
     let focused = useIsFocused();
 
     useEffect(() => {
     }, [focused])
 
+    // signs user out of app
     const onPressSignOut = async () => {
         try {
-            goGetStarted();
+            navigation.navigate("WelcomeView")
             await signOut();
         } catch (error) {
-            goGetStarted();
+            navigation.navigate("WelcomeView")
             Alert.alert(`Failed to sign out: ${error.message}`);
         }
     };
 
+    // navigates user to profile
     const onPressGoProfile = async () => {
         navigation.navigate("Profile")
     };

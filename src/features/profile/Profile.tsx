@@ -24,18 +24,18 @@ interface Props {
 
 const Home = ({ navigation }: Props) => {
     let { signOut, user } = useAuth();
-    function goGetStarted() { navigation.navigate("WelcomeView") }
     let focused = useIsFocused();
 
     useEffect(() => {
     }, [focused])
 
+    // signs user out of app
     const onPressSignOut = async () => {
         try {
-            goGetStarted();
+            navigation.navigate("WelcomeView")
             await signOut();
         } catch (error) {
-            goGetStarted();
+            navigation.navigate("WelcomeView")
             Alert.alert(`Failed to sign out: ${error.message}`);
         }
     };
