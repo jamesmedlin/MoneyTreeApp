@@ -19,7 +19,7 @@ import { useIsFocused } from '@react-navigation/native';
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
-const Categories = (props) => {
+const Explore = (props) => {
     const { user } = useAuth();
     let [buttonSelected, setSelected] = useState("");
     let [selectedAnswer, setAnswer] = useState("")
@@ -193,4 +193,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Categories;
+export default Explore;

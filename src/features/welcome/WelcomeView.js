@@ -14,9 +14,9 @@ export function WelcomeView({ navigation }) {
     const { user, signUp, signOut, signIn } = useAuth();
 
     useEffect(() => {
-        // If there is a user logged in, go to the Profile page.
+        // If there is a user logged in, go to the Home page.
         if (user != null) {
-            navigation.navigate("Profile");
+            navigation.navigate("Home");
         }
     }, [user, loginScreen]);
 

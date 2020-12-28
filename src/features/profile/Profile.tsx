@@ -15,9 +15,6 @@ import { RootStackParamsList } from "../navigation/Navigator"
 import { useAuth } from "../../providers/AuthProvider";
 import { useIsFocused } from '@react-navigation/native';
 
-
-enum progress { hasNotStarted, inProgress, complete }
-
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
@@ -25,7 +22,7 @@ interface Props {
     navigation: StackNavigationProp<RootStackParamsList, "Profile">
 }
 
-const Profile = ({ navigation }: Props) => {
+const Home = ({ navigation }: Props) => {
     let { signOut, user } = useAuth();
     function goGetStarted() { navigation.navigate("WelcomeView") }
     let focused = useIsFocused();
@@ -43,15 +40,6 @@ const Profile = ({ navigation }: Props) => {
         }
     };
 
-    const onPressSeeData = async () => {
-        try {
-            const data = await user.refreshCustomData();
-            console.log(data);
-        } catch (error) {
-            Alert.alert(`Failed to sign out: ${error.message}`);
-        }
-    };
-
     return (
         <View>
             <ScrollView
@@ -60,14 +48,9 @@ const Profile = ({ navigation }: Props) => {
             >
                 <View style={styles.innerContainer}>
                     <Space.V s={20} />
-                    <Button onPress={onPressSeeData} title="See Data" />
-                    <Space.V s={20} />
-                    <View style={styles.profilePicture}></View>
+                    <Text style={styles.title}>My Profile</Text>
                     <Space.V s={10} />
-                    <Space.V s={10} />
-                    <Text style={styles.title}>Hello!</Text>
-                    <Space.V s={10} />
-                    <Text style={styles.title}>Your balance is: ${user.customData.balance}</Text>
+                    {user && <Text style={styles.title}>Balance: ${user.customData.balance}</Text>}
                     <Space.V s={10} />
                     <Button onPress={() => onPressSignOut()} title="Sign Out" />
                     <Space.V s={20} />
@@ -127,4 +110,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Profile
+export default Home

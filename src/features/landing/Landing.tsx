@@ -26,7 +26,7 @@ interface Props {
 }
 
 const Landing = ({ navigation }: Props) => {
-  const goCategories = () => navigation.navigate("Profile")
+  const goHome = () => navigation.navigate("Home")
 
   return (
     <View>
@@ -60,7 +60,7 @@ const Landing = ({ navigation }: Props) => {
           <View style={styles.signinBtn}>
             <Button
               title="NAVIGATE CATEGORIES"
-              onPress={goCategories}
+              onPress={goHome}
               testID="goHomeBtn"
               color="lightpink"
             />
