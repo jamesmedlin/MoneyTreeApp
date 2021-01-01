@@ -1,5 +1,5 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import {
     ScrollView,
     StyleSheet,
@@ -14,6 +14,7 @@ import Space from "../../common/components/abstract/Space"
 import { RootStackParamsList } from "../navigation/Navigator"
 import { useAuth } from "../../providers/AuthProvider";
 import { useIsFocused } from '@react-navigation/native';
+import Geolocation from '@react-native-community/geolocation';
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -25,6 +26,7 @@ interface Props {
 const Home = ({ navigation }: Props) => {
     let { signOut, user } = useAuth();
     let focused = useIsFocused();
+    let [location, setLocation] = useState("")
 
     useEffect(() => {
     }, [focused])
@@ -40,6 +42,23 @@ const Home = ({ navigation }: Props) => {
         }
     };
 
+    // const getMoviesFromApiAsync = async () => {
+    //     try {
+    //         let response = await fetch(
+    //             'http://localhost:3000/'
+    //         );
+    //         let json = await response.json();
+    //         console.log(json);
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // };
+
+    function findCoordinates() {
+        Geolocation.setRNConfiguration({ skipPermissionRequests: false, authorizationLevel: "whenInUse" });
+        Geolocation.requestAuthorization();
+    };
+
     return (
         <View>
             <ScrollView
@@ -48,12 +67,15 @@ const Home = ({ navigation }: Props) => {
             >
                 <View style={styles.innerContainer}>
                     <Space.V s={20} />
-                    <Text style={styles.title}>My Profile</Text>
-                    <Space.V s={10} />
                     {user && <Text style={styles.title}>Balance: ${user.customData.balance}</Text>}
                     <Space.V s={10} />
+                    {user && <Text style={styles.title}>Total Earnings: ${user.customData.totalEarnings}</Text>}
+                    <Space.V s={10} />
+                    {/* <Button onPress={() => getMoviesFromApiAsync()} title="API" />
+                    <Space.V s={20} /> */}
+                    <Button onPress={() => findCoordinates()} title="Share My Location" />
+                    <Space.V s={10} />
                     <Button onPress={() => onPressSignOut()} title="Sign Out" />
-                    <Space.V s={20} />
                 </View>
             </ScrollView>
         </View>

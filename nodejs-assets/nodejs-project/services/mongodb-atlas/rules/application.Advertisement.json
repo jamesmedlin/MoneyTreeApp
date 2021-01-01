@@ -31,7 +31,13 @@
                 "bsonType": "double"
             },
             "isActive": {
-                "bsontype": "bool"
+                "bsonType": "bool"
+            },
+            "latitude": {
+                "bsonType": "double"
+            },
+            "longitude": {
+                "bsonType": "double"
             },
             "name": {
                 "bsonType": "string"
@@ -45,6 +51,12 @@
                     "bsonType": "string"
                 },
                 "maxItems": 3
+            },
+            "radius": {
+                "bsonType": "double"
+            },
+            "specifiesLocation": {
+                "bsonType": "bool"
             },
             "totalOwed": {
                 "bsonType": "double"

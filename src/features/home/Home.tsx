@@ -30,17 +30,6 @@ const Home = ({ navigation }: Props) => {
     useEffect(() => {
     }, [focused])
 
-    // signs user out of app
-    const onPressSignOut = async () => {
-        try {
-            navigation.navigate("WelcomeView")
-            await signOut();
-        } catch (error) {
-            navigation.navigate("WelcomeView")
-            Alert.alert(`Failed to sign out: ${error.message}`);
-        }
-    };
-
     // navigates user to profile
     const onPressGoProfile = async () => {
         navigation.navigate("Profile")
@@ -54,16 +43,18 @@ const Home = ({ navigation }: Props) => {
             >
                 <View style={styles.innerContainer}>
                     <Space.V s={20} />
-                    <Button onPress={() => onPressGoProfile()} title="Profile" />
-                    <Space.V s={20} />
-                    <View style={styles.profilePicture}></View>
+                    <View style={styles.topContainer}>
+                        <View style={styles.profileContainer}>
+                            <View style={styles.profilePicture}></View>
+                            <Button onPress={() => onPressGoProfile()} title="Profile" />
+                        </View>
+                    </View>
                     <Space.V s={10} />
                     <Space.V s={10} />
                     <Text style={styles.title}>Hello!</Text>
                     <Space.V s={10} />
-                    {user && <Text style={styles.title}>Your balance is: ${user.customData.balance}</Text>}
-                    <Space.V s={10} />
-                    <Button onPress={() => onPressSignOut()} title="Sign Out" />
+                    {user && <Text style={styles.title}>Balance: ${user.customData.balance}</Text>}
+                    {user && <Text style={styles.title}>Total Earnings: ${user.customData.totalEarnings}</Text>}
                     <Space.V s={20} />
                 </View>
             </ScrollView>
@@ -85,13 +76,19 @@ const styles = StyleSheet.create({
         alignSelf: "flex-start",
         fontSize: 20,
     },
-    profilePicture: {
+    topContainer: {
         alignSelf: 'flex-end',
+        paddingRight: 30,
+    },
+    profileContainer: {
+        flexDirection: "column",
+        justifyContent: "center",
+    },
+    profilePicture: {
         width: 100,
         height: 100,
         borderRadius: 50,
         backgroundColor: '#c4c4c4',
-        marginRight: 30,
     },
     tile: {
         width,

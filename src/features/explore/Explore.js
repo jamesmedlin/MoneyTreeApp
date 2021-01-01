@@ -14,6 +14,7 @@ import { WebView } from "react-native-webview";
 import Video from "react-native-video";
 import { useAuth } from "../../providers/AuthProvider";
 import { useIsFocused } from '@react-navigation/native';
+import Geolocation from '@react-native-community/geolocation';
 
 
 var width = Dimensions.get('window').width;
@@ -33,6 +34,53 @@ const Explore = (props) => {
     useEffect(() => {
     }, [ad])
 
+    async function getAdvert() {
+        // retrieves ad depending on current location
+        try {
+            let advert = await Geolocation.getCurrentPosition(
+                async position => {
+                    let latitude = parseFloat(position.coords.latitude);
+                    let longitude = parseFloat(position.coords.longitude);
+                    let result = await user.functions.getAdvertisement(latitude, longitude);
+                    if (result) {
+                        setAdvertisement(result);
+                    } else {
+                        setAdvertisement(null);
+                    }
+                },
+                async error => {
+                    // Alert.alert(error.message);
+                    console.log("ERROR MSG: ", error.message);
+                    result = await user.functions.getAdvertisement(-1, -1);
+                    if (result) {
+                        setAdvertisement(result);
+                    } else {
+                        // sets explore screen to no video
+                        setAdvertisement(null);
+                    }
+                }
+            );
+        } catch (error) {
+            result = await user.functions.getAdvertisement(-1, -1);
+            if (result) {
+                setAdvertisement(result);
+            } else {
+                // sets explore screen to no video
+                setAdvertisement(null);
+            }
+        }
+        // this retrieves an advertisement for the user to watch
+        if (!ad) {
+            result = await user.functions.getAdvertisement(-1, -1);
+            if (result) {
+                setAdvertisement(result);
+            } else {
+                // sets explore screen to no video
+                setAdvertisement(null);
+            }
+        }
+    }
+
     // verifies the submitted quiz answer
     async function verifyAnswers() {
         // quiz modal is only dismissed when an answer is selected
@@ -46,12 +94,31 @@ const Explore = (props) => {
                 // setting the ad to null allows the hook to catch that the ad has changed
                 setAdvertisement(null);
             }
-            // this retrieves an advertisement for the user to watch
-            let advert = await user.functions.getAdvertisement();
+            // let advert = await Geolocation.getCurrentPosition(
+            //     async position => {
+            //         let location = JSON.stringify(position);
+            //         console.log("LOCATION", location)
+            //         let latitude = parseFloat(position.coords.latitude);
+            //         let longitude = parseFloat(position.coords.longitude);
+            //         console.log("BEFORE CALL LAT", latitude)
+            //         return await user.functions.getAdvertisement(latitude, longitude);
+            //     },
+            //     async error => {
+            //         // Alert.alert(error.message);
+            //         console.log("ERROR MSG: ", error.message);
+            //         return await user.functions.getAdvertisement(-1, -1)
+            //     }
+            // );
+            // // this retrieves an advertisement for the user to watch
+            // if (!advert) {
+            //     console.log("geo came back null");
+            //     advert = await user.functions.getAdvertisement(-1, -1);
+            // }
             // if there is another ad for the user to watch
-            if (advert) {
-                setAdvertisement(advert);
-            }
+            let advert = await getAdvert()
+            // if (advert) {
+            //     setAdvertisement(advert);
+            // }
             // dismisses quiz modal
             setActivation(false);
             // clears previous quiz answer
@@ -62,11 +129,14 @@ const Explore = (props) => {
 
     // retrieves user's first ad of the session
     async function startWatching() {
-        let advert = await user.functions.getAdvertisement();
+        let advert = await getAdvert();
+        // let advert = await user.functions.getAdvertisement();
         // if there is another ad for the user to watch
-        if (advert) {
-            setAdvertisement(advert);
-        }
+        // console.log("before",advert)
+        // if (advert) {
+        //     console.log("inside", advert)
+        //     setAdvertisement(advert);
+        // }
     }
 
     // calls the quiz modal at the end of the video
@@ -78,15 +148,15 @@ const Explore = (props) => {
         <View style={styles.innerContainer} >
             {webpage &&
                 <Modal animationType='slide' presentationStyle="pageSheet">
-                    <View style={styles.view}>
-                        <TouchableOpacity onPress={() => {
-                            setWebpage(false)
-                            setPaused(false)
-                        }} style={styles.backButton}><Text>Go Back To Video</Text></TouchableOpacity>
-                        <WebView style={styles.webview}
-                            source={{ uri: ad.website }}
-                        />
-                    </View>
+                        <View style={styles.view}>
+                            <TouchableOpacity onPress={() => {
+                                setWebpage(false)
+                                setPaused(false)
+                            }} style={styles.backButton}><Text>Go Back To Video</Text></TouchableOpacity>
+                            <WebView style={styles.webview}
+                                source={{ uri: ad.website }}
+                            />
+                        </View>
                 </Modal>
             }
             {ad ?
@@ -95,7 +165,7 @@ const Explore = (props) => {
                     setPaused(true)
                 }}>
                     <Video source={{ uri: ad.uri }}
-                        controls={false} style={styles.video} resizeMode={'cover'} paused={isPaused || !focused} onEnd={() => callQuiz()} />
+                        controls={false} style={styles.video} resizeMode={'cover'} paused={isPaused || !focused} onEnd={() => callQuiz()} ignoreSilentSwitch={"ignore"} />
                 </TouchableOpacity>
                 : null}
             {

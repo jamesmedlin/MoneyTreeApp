@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, Button, Alert, StyleSheet, Dimensions } from "react-native";
+import { View, Text, TextInput, Button, Alert, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import Space from "../../common/components/abstract/Space"
 import { Colors } from "react-native/Libraries/NewAppScreen"
 import { useAuth } from "../../providers/AuthProvider";
@@ -46,7 +46,7 @@ export function WelcomeView({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>{loginScreen ? "Test App Sign In" : "Test App Sign Up"}</Text>
+            <Text style={styles.text}>{loginScreen ? "Login" : "Create Account"}</Text>
             <Space.V s={10} />
             <View style={styles.inputContainer}>
                 <TextInput
@@ -67,9 +67,11 @@ export function WelcomeView({ navigation }) {
                 />
             </View>
             <Space.V s={10} />
-            {loginScreen ? <Button onPress={onPressSignIn} title="Sign In" /> : <Button onPress={onPressSignUp} title="Sign Up" /> }
-            {loginScreen ? <Button onPress={() => setScreen(false)} title="Create Account" /> :
-                <Button onPress={() => setScreen(true)} title="Go back to Sign In" />}
+            {loginScreen ? <TouchableOpacity onPress={onPressSignIn}><Text style={styles.topChoice}>Log In</Text></TouchableOpacity> : <TouchableOpacity onPress={onPressSignUp}><Text style={styles.topChoice}>Sign Up</Text></TouchableOpacity> }
+            <Space.V s={5} />
+            {loginScreen ? <TouchableOpacity onPress={() => setScreen(false)}><Text style={styles.bottomChoice}>Create Account</Text></TouchableOpacity> :
+                <TouchableOpacity onPress={() => setScreen(true)}><Text style={styles.bottomChoice}>Go back to Login</Text></TouchableOpacity>}
+                <Space.V s={100} />
         </View>
     );
 }
@@ -84,17 +86,25 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         padding: 5,
-        width,
+        width: width - 20,
     },
     inputStyle: {
         borderColor: "black",
         borderWidth: 1,
         padding: 10,
-        borderRadius: 2,
+        borderRadius: 8,
     },
     text: {
         fontSize: 30,
         fontWeight: '900',
         color: 'grey',
     },
+    topChoice: {
+        fontSize: 22,
+        fontWeight: "700",
+    },
+    bottomChoice: {
+        fontSize: 16,
+        fontWeight: "700",
+    }
 })

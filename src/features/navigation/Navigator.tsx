@@ -61,7 +61,7 @@ function Navigator() {
       <Provider store={store}>
         <NavigationContainer ref={navigationRef}>
           <Stack.Navigator initialRouteName="WelcomeView">
-            <Stack.Screen name="WelcomeView" component={WelcomeView} />
+            <Stack.Screen name="WelcomeView" component={WelcomeView} options={{ headerShown: false }} />
             <Tab.Screen name="Home" component={TabNavigator} options={{ headerShown: false, gestureEnabled: false }} />
           </Stack.Navigator>
         </NavigationContainer>

@@ -9,8 +9,14 @@ exports = async function (advertisement, user) {
     "$set": { "totalOwed": advertisement.totalOwed + advertisement.cpcv }
   }
 
-  const ad = await collection.updateOne({ _id: advertisement._id }, change);
-  const userQuery = await users.updateOne({ _id: caller._id, _partition: caller._partition }, { $set: { balance: caller.balance + (advertisement.cpcv * 0.90) } });
+  const ad = await collection.updateOne({ "_id": advertisement._id, "viewers": { "$nin": [caller._id] } }, change);
+  const userQuery = await users.updateOne({ "_id": caller._id, "_partition": caller._partition },
+    {
+      "$set": {
+        "balance": caller.balance + (advertisement.cpcv * 0.90),
+        "totalEarnings": caller.totalEarnings + (advertisement.cpcv * 0.90)
+      }
+    });
 
   return ad;
 };
