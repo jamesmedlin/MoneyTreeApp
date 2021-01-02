@@ -7,7 +7,9 @@ import {
     View,
     Dimensions,
     Button,
-    Alert
+    Alert,
+    TouchableOpacity,
+    Linking
 } from "react-native"
 import { Colors } from "react-native/Libraries/NewAppScreen"
 import Space from "../../common/components/abstract/Space"
@@ -15,6 +17,8 @@ import { RootStackParamsList } from "../navigation/Navigator"
 import { useAuth } from "../../providers/AuthProvider";
 import { useIsFocused } from '@react-navigation/native';
 import Geolocation from '@react-native-community/geolocation';
+import { check, PERMISSIONS, RESULTS } from 'react-native-permissions';
+import { roundMoney } from "../../common/helpers/roundMoney"
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -54,7 +58,48 @@ const Home = ({ navigation }: Props) => {
     //     }
     // };
 
-    function findCoordinates() {
+    async function findCoordinates() {
+        check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
+            .then(async (result) => {
+                switch (result) {
+                    case RESULTS.UNAVAILABLE:
+                        Alert.alert('This feature is not available (on this device / in this context).');
+                        break;
+                    case RESULTS.DENIED:
+                        console.log('The permission has not been requested / is denied but requestable.');
+                        break;
+                    case RESULTS.LIMITED:
+                        Alert.alert('The permission is limited: some actions are possible.');
+                        break;
+                    case RESULTS.GRANTED:
+                        Alert.alert('You are already sharing your location.');
+                        break;
+                    case RESULTS.BLOCKED:
+                        Alert.alert(
+                            'Share Location',
+                            'This app uses location services to find paying ads in your area.',
+                            [
+                                {
+                                    text: 'Allow in settings',
+                                    onPress: async () => await Linking.openSettings()
+                                },
+                                {
+                                    text: 'Cancel',
+                                    onPress: () => console.log('Cancel Pressed'),
+                                    style: 'cancel'
+                                }
+                            ],
+                            { cancelable: false }
+                        );
+                        break;
+                }
+            })
+            .catch((error) => {
+                console.log("Error", error);
+            });
+
+
+        // 
         Geolocation.setRNConfiguration({ skipPermissionRequests: false, authorizationLevel: "whenInUse" });
         Geolocation.requestAuthorization();
     };
@@ -67,15 +112,17 @@ const Home = ({ navigation }: Props) => {
             >
                 <View style={styles.innerContainer}>
                     <Space.V s={20} />
-                    {user && <Text style={styles.title}>Balance: ${user.customData.balance}</Text>}
+                    {user && <Text style={styles.title}>Balance: ${roundMoney(user.customData.balance)}</Text>}
                     <Space.V s={10} />
-                    {user && <Text style={styles.title}>Total Earnings: ${user.customData.totalEarnings}</Text>}
+                    {user && <Text style={styles.title}>Total Earnings: ${roundMoney(user.customData.totalEarnings)}</Text>}
                     <Space.V s={10} />
                     {/* <Button onPress={() => getMoviesFromApiAsync()} title="API" />
                     <Space.V s={20} /> */}
-                    <Button onPress={() => findCoordinates()} title="Share My Location" />
-                    <Space.V s={10} />
-                    <Button onPress={() => onPressSignOut()} title="Sign Out" />
+                    <View style={styles.settings}>
+                        <TouchableOpacity onPress={() => findCoordinates()}><Text style={styles.locationButtonText}>Share My Location</Text></TouchableOpacity>
+                        <Space.V s={10} />
+                    </View>
+                    <TouchableOpacity onPress={() => onPressSignOut()}><Text style={styles.signOutButtonText}>Sign Out</Text></TouchableOpacity>
                 </View>
             </ScrollView>
         </View>
@@ -92,44 +139,29 @@ const styles = StyleSheet.create({
         marginHorizontal: 12,
         alignItems: "center",
     },
-    header: {
-        alignSelf: "flex-start",
-        fontSize: 20,
-    },
-    profilePicture: {
-        alignSelf: 'flex-end',
-        width: 100,
-        height: 100,
-        borderRadius: 50,
-        backgroundColor: '#c4c4c4',
-        marginRight: 30,
-    },
-    tile: {
-        width,
-        paddingHorizontal: 30
-    },
     title: {
         alignSelf: "flex-start",
         fontSize: 20,
         marginLeft: 20,
         fontWeight: "700",
     },
-    todoitemcontainer: {
+    settings: {
         width,
-        paddingHorizontal: 30,
-        flexDirection: 'row',
-        flexWrap: "wrap",
-        justifyContent: "space-between",
-        paddingBottom: 20,
+        paddingHorizontal: 20,
+        alignItems: "flex-end",
     },
-    creditScore: {
-        alignSelf: 'center',
+    locationButtonText: {
+        fontWeight: "600",
+        fontSize: 16,
+        alignSelf: "center",
+        color: "#FF5A5F",
     },
-    text: {
-        fontSize: 20,
-        fontWeight: '900',
-        color: 'grey',
-    },
+    signOutButtonText: {
+        fontWeight: "600",
+        fontSize: 16,
+        alignSelf: "center",
+        color: "black",
+    }
 })
 
 export default Home

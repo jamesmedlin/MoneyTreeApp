@@ -23,4 +23,7 @@ target 'TestApp' do
   post_install do |installer|
     flipper_post_install(installer)
   end
+
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
 end

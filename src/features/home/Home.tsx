@@ -14,6 +14,9 @@ import Space from "../../common/components/abstract/Space"
 import { RootStackParamsList } from "../navigation/Navigator"
 import { useAuth } from "../../providers/AuthProvider";
 import { useIsFocused } from '@react-navigation/native';
+import { TouchableOpacity } from "react-native-gesture-handler"
+import Tile from "../../common/components/Tile"
+import { roundMoney } from "../../common/helpers/roundMoney"
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -43,18 +46,22 @@ const Home = ({ navigation }: Props) => {
             >
                 <View style={styles.innerContainer}>
                     <Space.V s={20} />
+                    <Text style={styles.title}>Hello!</Text>
+                    <Space.V s={10} />
                     <View style={styles.topContainer}>
                         <View style={styles.profileContainer}>
                             <View style={styles.profilePicture}></View>
-                            <Button onPress={() => onPressGoProfile()} title="Profile" />
+                            <Space.V s={3} />
+                            <TouchableOpacity onPress={() => onPressGoProfile()} style={styles.profileButton}><Text style={styles.profileButtonText}>Profile</Text></TouchableOpacity>
                         </View>
                     </View>
-                    <Space.V s={10} />
-                    <Space.V s={10} />
-                    <Text style={styles.title}>Hello!</Text>
-                    <Space.V s={10} />
-                    {user && <Text style={styles.title}>Balance: ${user.customData.balance}</Text>}
-                    {user && <Text style={styles.title}>Total Earnings: ${user.customData.totalEarnings}</Text>}
+                    <Space.V s={20} />
+                    {user &&
+                        <View style={styles.homeContentContainer}>
+                            <Tile text={`Transfer balance: $${roundMoney(user.customData.balance)}`} isCheckable={false} goTo={"TransferMoney"} />
+                            <Space.V s={7} />
+                        </View>
+                    }
                     <Space.V s={20} />
                 </View>
             </ScrollView>
@@ -72,10 +79,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 12,
         alignItems: "center",
     },
-    header: {
-        alignSelf: "flex-start",
-        fontSize: 20,
-    },
     topContainer: {
         alignSelf: 'flex-end',
         paddingRight: 30,
@@ -90,9 +93,8 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         backgroundColor: '#c4c4c4',
     },
-    tile: {
-        width,
-        paddingHorizontal: 30
+    homeContentContainer: {
+        width: width - 60,
     },
     title: {
         alignSelf: "flex-start",
@@ -100,22 +102,16 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         fontWeight: "700",
     },
-    todoitemcontainer: {
-        width,
-        paddingHorizontal: 30,
-        flexDirection: 'row',
-        flexWrap: "wrap",
-        justifyContent: "space-between",
-        paddingBottom: 20,
+    profileButton: {
+        width: 50,
+        alignSelf: "center",
     },
-    creditScore: {
-        alignSelf: 'center',
-    },
-    text: {
-        fontSize: 20,
-        fontWeight: '900',
-        color: 'grey',
-    },
+    profileButtonText: {
+        fontWeight: "600",
+        fontSize: 16,
+        alignSelf: "center",
+        color: "#FF5A5F",
+    }
 })
 
 export default Home

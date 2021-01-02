@@ -11,12 +11,16 @@ export function WelcomeView({ navigation }) {
     const [loginScreen, setScreen] = useState(true)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const { user, signUp, signOut, signIn } = useAuth();
+    const { user, signUp, signIn } = useAuth();
 
     useEffect(() => {
         // If there is a user logged in, go to the Home page.
         if (user != null) {
-            navigation.navigate("Home");
+            if (user.customData.hasOnboarded) {
+                navigation.navigate("Home");
+            } else {
+                navigation.navigate("OnboardingIntro")
+            }
         }
     }, [user, loginScreen]);
 
@@ -37,7 +41,7 @@ export function WelcomeView({ navigation }) {
     const onPressSignUp = async () => {
         try {
             await signUp(email, password);
-            signIn(email, password);
+            await signIn(email, password);
             setScreen(true);
         } catch (error) {
             Alert.alert(`Failed to sign up: ${error.message}`);
@@ -67,11 +71,11 @@ export function WelcomeView({ navigation }) {
                 />
             </View>
             <Space.V s={10} />
-            {loginScreen ? <TouchableOpacity onPress={onPressSignIn}><Text style={styles.topChoice}>Log In</Text></TouchableOpacity> : <TouchableOpacity onPress={onPressSignUp}><Text style={styles.topChoice}>Sign Up</Text></TouchableOpacity> }
+            {loginScreen ? <TouchableOpacity onPress={onPressSignIn}><Text style={styles.topChoice}>Log In</Text></TouchableOpacity> : <TouchableOpacity onPress={onPressSignUp}><Text style={styles.topChoice}>Sign Up</Text></TouchableOpacity>}
             <Space.V s={5} />
             {loginScreen ? <TouchableOpacity onPress={() => setScreen(false)}><Text style={styles.bottomChoice}>Create Account</Text></TouchableOpacity> :
                 <TouchableOpacity onPress={() => setScreen(true)}><Text style={styles.bottomChoice}>Go back to Login</Text></TouchableOpacity>}
-                <Space.V s={100} />
+            <Space.V s={100} />
         </View>
     );
 }

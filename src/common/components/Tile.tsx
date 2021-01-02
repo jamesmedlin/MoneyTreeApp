@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: 'grey',
         paddingTop: 3,
+        fontWeight: "600",
     },
     text2: {
         alignSelf: "flex-start",
