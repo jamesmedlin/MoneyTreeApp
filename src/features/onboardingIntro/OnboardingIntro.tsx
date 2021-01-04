@@ -39,13 +39,12 @@ const OnboardingIntro = ({ navigation }: Props) => {
             <View style={styles.innerContainer}>
                 <Text style={styles.title}>Welcome!</Text>
                 <Space.V s={10} />
-                <Text style={styles.bodyText}>Make $15/hour watching videos.</Text>
+                <Text style={styles.bodyText}>Earn $15/hour watching videos.</Text>
                 <Space.V s={3} />
+                <Text style={styles.bodyText}>It's simple! Watch the ad, answer a question, get paid!</Text>
+                <Space.V s={20} />
                 <Text style={styles.bodyText}>Earn an extra $0.50 for every referral you make!</Text>
                 <Space.V s={20} />
-                <Text style={styles.subtitle}>Our Promise:</Text>
-                <Space.V s={7} />
-                <Text style={styles.bodyText}>Your personal information is NOT provided to any companies whatsoever.</Text>
             </View>
             <View style={styles.nextButtonContainer}>
                 <TouchableOpacity onPress={() => goOnboardingGuide()} style={styles.nextButton}><Text style={styles.buttonText}>Next</Text></TouchableOpacity>

@@ -39,12 +39,9 @@ const OnboardingIntro = ({ navigation }: Props) => {
             <View style={styles.innerContainer}>
                 <Text style={styles.title}>How it works:</Text>
                 <Space.V s={10} />
-                <Text style={styles.bodyText}>It's simple! Watch the ad, answer a question, get paid!</Text>
-                <Space.V s={5} />
-                <Text style={styles.bodyText}>Relevent advertisement videos are waiting for your attention.</Text>
-                <Space.V s={5} />
-                <Text style={styles.bodyText}>If you're interested in the ad, click the video to visit its website.</Text>
-                <Space.V s={20} />
+                <Text style={styles.bodyText}>When interested, click each video to visit its website.</Text>
+                <Space.V s={3} />
+                <Text style={styles.bodyText}>Share ads you like on social media to earn extra cash!</Text>
             </View>
             <View style={styles.nextButtonContainer}>
                 <TouchableOpacity onPress={() => goOnboardingLocation()} style={styles.nextButton}><Text style={styles.buttonText}>Next</Text></TouchableOpacity>

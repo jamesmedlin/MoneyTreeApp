@@ -43,18 +43,20 @@ const OnboardingLocation = ({ navigation }: Props) => {
     return (
         <View style={styles.onboardingContainer}>
             <View style={styles.innerContainer}>
-                <Text style={styles.subtitle}>Want the most videos possible?</Text>
+                <Text style={styles.subtitle}>Want all possible offers?</Text>
                 <Space.V s={7} />
-                <Text style={styles.bodyText}>Share your location to access all of the videos in your area.</Text>
+                <Text style={styles.bodyText}>Allow us to confidentially use your location to send you local paid advertisements.</Text>
+                <Space.V s={20} />
+                <Text style={styles.subtitle}>Our Promise:</Text>
                 <Space.V s={7} />
-                <Text style={styles.bodyText}>If you opt out of sharing location, you will miss many paid videos!</Text>
+                <Text style={styles.bodyText}>Your personal information (including location) is not shared with anyone. EVER.</Text>
                 <Space.V s={20} />
-                <TouchableOpacity onPress={() => findCoordinates()} style={styles.locationButton}><Text style={styles.buttonText}>Share Location</Text></TouchableOpacity>
-                <Space.V s={20} />
-                <Text style={styles.bodyText}>Your location is NOT provided to any companies whatsoever.</Text>
-            </View>
-            <View style={styles.nextButtonContainer}>
-                <TouchableOpacity onPress={() => goHome()} style={styles.nextButton}><Text style={styles.buttonText}>Next</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    findCoordinates();
+                    goHome();
+                }} style={styles.locationButton}><Text style={styles.buttonText}>Share Location</Text></TouchableOpacity>
+                <Space.V s={15} />
+                <Text style={styles.bodyText}>Without your location, we will not be able to send you the most paid offers possible.</Text>
             </View>
         </View >
     )
