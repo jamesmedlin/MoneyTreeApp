@@ -1,7 +1,5 @@
 import React from "react"
-import { Text, View, StyleSheet, TouchableOpacity, Dimensions, Image } from "react-native"
-import Animated from "react-native-reanimated"
-import { useTimingTransition } from "react-native-redash"
+import { Text, View, StyleSheet, TouchableOpacity, Dimensions } from "react-native"
 import { useNavigation } from '@react-navigation/native'
 
 var width = Dimensions.get('window').width;

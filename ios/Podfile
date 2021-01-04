@@ -10,6 +10,8 @@ target 'TestApp' do
 
   pod 'react-native-geolocation', :path => '../node_modules/@react-native-community/geolocation'
 
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
+
   target 'TestAppTests' do
     inherit! :complete
     # Pods for testing

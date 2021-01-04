@@ -17,7 +17,6 @@ import { useIsFocused } from '@react-navigation/native';
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Tile from "../../common/components/Tile"
 import { roundMoney } from "../../common/helpers/roundMoney"
-import { check, PERMISSIONS, RESULTS } from 'react-native-permissions';
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;

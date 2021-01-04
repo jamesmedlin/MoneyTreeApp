@@ -1,5 +1,5 @@
 import SplashScreen from "react-native-bootsplash"
-import { NavigationContainer, TabActions } from "@react-navigation/native"
+import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import React, { useEffect } from "react"
 import { Provider } from 'react-redux';
@@ -8,7 +8,6 @@ import {
   navigationRef,
 } from "../../services/navigation/navigationService"
 import Profile from "../profile/Profile"
-import Landing from "../landing/Landing"
 import Explore from "../explore/Explore"
 import OnboardingIntro from "../onboardingIntro/OnboardingIntro"
 import OnboardingGuide from "../onboardingGuide/OnboardingGuide"

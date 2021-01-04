@@ -1,7 +1,5 @@
 import React from "react"
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native"
-import Animated, { onChange } from "react-native-reanimated"
-import { useTimingTransition } from "react-native-redash"
 import { useNavigation } from '@react-navigation/native'
 
 interface TileProps {
