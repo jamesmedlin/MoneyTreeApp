@@ -30,14 +30,14 @@ const Tile = ({ goTo, text, isCheckable }: TileProps) => {
 const styles = StyleSheet.create({
     tile: {
         borderRadius: 10,
-        backgroundColor: "white",
+        backgroundColor: "#FFFFFF",
         bottom: "10%",
-        shadowColor: "#000",
+        shadowColor: "#000000",
         shadowOffset: {
             width: 0,
             height: 7,
         },
-        shadowOpacity: 0.2,
+        shadowOpacity: 0.3,
         shadowRadius: 5.0,
         elevation: 10,
         minWidth: 200,
