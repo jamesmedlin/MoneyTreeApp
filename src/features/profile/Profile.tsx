@@ -119,9 +119,9 @@ const Home = ({ navigation }: Props) => {
                     {/* <Button onPress={() => getMoviesFromApiAsync()} title="API" />
                     <Space.V s={20} /> */}
                     <View style={styles.settings}>
-                        <TouchableOpacity onPress={() => findCoordinates()}><Text style={styles.locationButtonText}>Share My Location</Text></TouchableOpacity>
-                        <Space.V s={10} />
+                        <TouchableOpacity onPress={() => findCoordinates()}><Text style={styles.locationButtonText}>Allow Location Services</Text></TouchableOpacity>
                     </View>
+                    <Space.V s={10} />
                     <TouchableOpacity onPress={() => onPressSignOut()}><Text style={styles.signOutButtonText}>Sign Out</Text></TouchableOpacity>
                 </View>
             </ScrollView>

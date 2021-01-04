@@ -17,6 +17,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Tile from "../../common/components/Tile"
 import { roundMoney } from "../../common/helpers/roundMoney"
+import { check, PERMISSIONS, RESULTS } from 'react-native-permissions';
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -26,7 +27,7 @@ interface Props {
 }
 
 const Home = ({ navigation }: Props) => {
-    let { signOut, user } = useAuth();
+    let { user } = useAuth();
     // determines if this screen is currently being watched
     let focused = useIsFocused();
 
@@ -38,6 +39,17 @@ const Home = ({ navigation }: Props) => {
         navigation.navigate("Profile")
     };
 
+    // async function mapSavedVideos() {
+    //     await user.refreshCustomData();
+    //     if (user.customData.savedAds.length != 0) {
+    //         let result = await user.functions.getSavedAdsFull(user.customData.savedAds);
+    //         navigation.navigate("SavedVideos", { pass: result })
+    //     } else {
+    //         console.log("You have no saved videos");
+    //         navigation.navigate("SavedVideos", { pass: [] })
+    //     }
+    // }
+
     return (
         <View>
             <ScrollView
@@ -48,21 +60,20 @@ const Home = ({ navigation }: Props) => {
                     <Space.V s={20} />
                     <Text style={styles.title}>Hello!</Text>
                     <Space.V s={10} />
-                    <View style={styles.topContainer}>
-                        <View style={styles.profileContainer}>
-                            <View style={styles.profilePicture}></View>
-                            <Space.V s={3} />
-                            <TouchableOpacity onPress={() => onPressGoProfile()} style={styles.profileButton}><Text style={styles.profileButtonText}>Profile</Text></TouchableOpacity>
-                        </View>
+                    <View style={styles.profileContainer}>
+                        <View style={styles.profilePicture}></View>
+                        <Space.V s={3} />
+                        <TouchableOpacity onPress={() => onPressGoProfile()} style={styles.profileButton}><Text style={styles.profileButtonText}>Profile</Text></TouchableOpacity>
                     </View>
-                    <Space.V s={20} />
+                    <Space.V s={30} />
                     {user &&
                         <View style={styles.homeContentContainer}>
                             <Tile text={`Transfer balance: $${roundMoney(user.customData.balance)}`} isCheckable={false} goTo={"TransferMoney"} />
+                            <Space.V s={10} />
+                            <Tile text={`My saved videos`} isCheckable={false} goTo={"SavedVideos"} />
                             <Space.V s={7} />
                         </View>
                     }
-                    <Space.V s={20} />
                 </View>
             </ScrollView>
         </View>
@@ -74,16 +85,15 @@ const styles = StyleSheet.create({
     scrollView: {
         backgroundColor: Colors.lighter,
         width,
+        height,
     },
     innerContainer: {
         marginHorizontal: 12,
         alignItems: "center",
     },
-    topContainer: {
-        alignSelf: 'flex-end',
-        paddingRight: 30,
-    },
     profileContainer: {
+        alignSelf: 'flex-end',
+        marginRight: 25,
         flexDirection: "column",
         justifyContent: "center",
     },

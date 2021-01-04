@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import Realm from "realm";
 import { getRealmApp } from "../getRealmApp";
+import { Alert } from "react-native";
 
 // Access the Realm App.
 const app = getRealmApp();
@@ -53,6 +54,7 @@ const AuthProvider = ({ children }) => {
             const newUser = await app.logIn(creds);
             setUser(newUser);
         } catch (error) {
+            Alert.alert(error.message);
             console.log("Error signing in: ", error);
         }
     };
@@ -62,8 +64,11 @@ const AuthProvider = ({ children }) => {
     const signUp = async (email, password) => {
         try {
             await app.emailPasswordAuth.registerUser(email, password);
+            return true;
         } catch (error) {
+            Alert.alert(error.message);
             console.log('Error signing user up', error);
+            return false;
         }
     };
 

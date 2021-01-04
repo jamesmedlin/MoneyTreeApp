@@ -14,6 +14,7 @@ import OnboardingIntro from "../onboardingIntro/OnboardingIntro"
 import OnboardingGuide from "../onboardingGuide/OnboardingGuide"
 import OnboardingLocation from "../onboardingLocation/OnboardingLocation"
 import TransferMoney from "../transferMoney/TransferMoney"
+import SavedVideos from "../savedVideos/SavedVideos"
 import Home from "../home/Home"
 import { WelcomeView } from "../welcome/WelcomeView"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -30,6 +31,7 @@ export type RootStackParamsList = {
   OnboardingGuide: undefined
   OnboardingLocation: undefined
   TransferMoney: undefined
+  SavedVideos: undefined
 }
 
 const Stack = createStackNavigator<RootStackParamsList>();
@@ -40,14 +42,22 @@ export function HomeStackScreen() {
     <Stack.Screen name="Home" component={Home} options={{
       headerLeft: null, headerTitleStyle: {
         color: '#FF5A5F'
-      }, }} />
+      },
+    }} />
     <Stack.Screen name="Profile" component={Profile} options={{
+      headerTitleStyle: { color: '#FF5A5F' },
+      headerTintColor: "#FF5A5F"
+    }} />
+    <Stack.Screen name="TransferMoney" component={TransferMoney} options={{
+      headerTitleStyle: { color: '#FF5A5F' },
+      headerTintColor: "#FF5A5F",
+    }} />
+    <Stack.Screen name="SavedVideos" component={SavedVideos} options={{
       headerTitleStyle: {
         color: '#FF5A5F'
       },
       headerTintColor: "#FF5A5F",
     }} />
-    <Stack.Screen name="TransferMoney" component={TransferMoney} />
   </Stack.Navigator>)
 }
 

@@ -26,18 +26,6 @@ const TransferMoney = ({ navigation }: Props) => {
     useEffect(() => {
     })
 
-    // const getMoviesFromApiAsync = async () => {
-    //     try {
-    //         let response = await fetch(
-    //             'http://localhost:3000/'
-    //         );
-    //         let json = await response.json();
-    //         console.log(json);
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // };
-
     return (
         <View>
             <ScrollView
