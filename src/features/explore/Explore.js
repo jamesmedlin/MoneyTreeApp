@@ -34,6 +34,7 @@ const Explore = (props) => {
     let [isAlreadySaved, setAlreadySaved] = useState(null);
     let [saveLoading, setSaveLoading] = useState(false);
     let [quizLoading, setQuizLoading] = useState(false);
+    let [webLoading, setWebLoading] = useState(false);
 
     // updates page component any time the ad is changed 
     // tells video component to start playing newest ad
@@ -153,8 +154,11 @@ const Explore = (props) => {
                             setWebpage(false)
                             setPaused(false)
                         }} style={styles.backButton}><Text style={styles.backButtonText}>Go Back To Video</Text></TouchableOpacity>
+                        {webLoading && <ActivityIndicator size="large" style={{ marginTop: 10 }}/>}
                         <WebView style={styles.webview}
                             source={{ uri: ad.website }}
+                            onLoadStart={() => setWebLoading(true)}
+                            onLoadEnd={() => setWebLoading(false)}
                         />
                     </View>
                 </Modal>
@@ -165,8 +169,8 @@ const Explore = (props) => {
                         <Text style={{ color: "white", fontSize: 16, fontWeight: "600", marginBottom: 20 }}>Click video to see website!</Text>
                     </View>
                     <TouchableOpacity onPress={() => {
-                        setWebpage(true)
-                        setPaused(true)
+                        setWebpage(true);
+                        setPaused(true);
                     }} style={styles.videoContainer}>
                         <Video source={{ uri: ad.uri }}
                             controls={false} style={styles.video} resizeMode={'cover'} paused={isPaused || !focused} onEnd={() => callQuiz()} ignoreSilentSwitch={"ignore"} />
@@ -185,7 +189,7 @@ const Explore = (props) => {
                                 : <TouchableOpacity onPress={() => setAnswer(ad.quiz[1])} style={styles.choices}><Text style={styles.choicesText}>{`${ad.quiz[1]}`}</Text></TouchableOpacity>}
                             {selectedAnswer == ad.quiz[2] ? <TouchableOpacity onPress={() => setAnswer(ad.quiz[2])} style={styles.choicesSelected}><Text style={styles.choicesTextSelected}>{`${ad.quiz[2]}`}</Text></TouchableOpacity>
                                 : <TouchableOpacity onPress={() => setAnswer(ad.quiz[2])} style={styles.choices}><Text style={styles.choicesText}>{`${ad.quiz[2]}`}</Text></TouchableOpacity>}
-                            {quizLoading ? <ActivityIndicator size="small" style={styles.activityIndicatorSubmit}/> :
+                            {quizLoading ? <ActivityIndicator size="small" style={styles.activityIndicatorSubmit} /> :
                                 <TouchableOpacity onPress={() => verifyAnswers()} style={styles.submitButton}><Text style={styles.submitButtonText}>Submit</Text></TouchableOpacity>}
                         </View>
                     </View>
@@ -249,12 +253,6 @@ const styles = StyleSheet.create({
     video: {
         height: width / (16 / 9),
         width,
-    },
-    touch: {
-        backgroundColor: "#000000",
-        color: "#000000",
-        width: 100,
-        height: 100,
     },
     question: {
         paddingHorizontal: 20,
