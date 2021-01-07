@@ -1,7 +1,5 @@
 import React from "react"
-import { Text, View, StyleSheet, TouchableOpacity, Dimensions, Image } from "react-native"
-import Animated from "react-native-reanimated"
-import { useTimingTransition } from "react-native-redash"
+import { Text, View, StyleSheet, TouchableOpacity, Dimensions } from "react-native"
 import { useNavigation } from '@react-navigation/native'
 
 var width = Dimensions.get('window').width;
@@ -60,8 +58,8 @@ const StatusBox = ({ text, goTo, children, status }: StatusBoxProps) => {
 
 const styles = StyleSheet.create({
     container: {
-        width: (width - 100) / 2,
-        height: (width - 100) / 2,
+        width: (width - 65) / 2,
+        height: (width - 65) / 2,
         borderRadius: 10,
         backgroundColor: "white",
         bottom: "10%",
@@ -74,13 +72,13 @@ const styles = StyleSheet.create({
         shadowRadius: 5.0,
         elevation: 10,
         minHeight: 80,
-        marginBottom: 40,
+        // marginBottom: 40,
         flexDirection: 'row',
     },
     innerContainer: {
         flexDirection: 'column',
-        width: (width - 100) / 2,
-        height: (width - 100) / 2,
+        width: (width - 65) / 2,
+        height: (width - 65) / 2,
     },
     childContainer: {
         alignSelf: 'center',
@@ -89,7 +87,7 @@ const styles = StyleSheet.create({
         zIndex: 0,
     },
     titlecontainer: {
-        width: (width - 100) / 2,
+        width: (width - 65) / 2,
         alignItems: 'flex-end',
         paddingRight: 5,
         paddingBottom: 5,

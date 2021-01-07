@@ -1,7 +1,5 @@
 import React from "react"
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native"
-import Animated, { onChange } from "react-native-reanimated"
-import { useTimingTransition } from "react-native-redash"
 import { useNavigation } from '@react-navigation/native'
 
 interface TileProps {
@@ -30,14 +28,14 @@ const Tile = ({ goTo, text, isCheckable }: TileProps) => {
 const styles = StyleSheet.create({
     tile: {
         borderRadius: 10,
-        backgroundColor: "white",
+        backgroundColor: "#FFFFFF",
         bottom: "10%",
-        shadowColor: "#000",
+        shadowColor: "#000000",
         shadowOffset: {
             width: 0,
             height: 7,
         },
-        shadowOpacity: 0.2,
+        shadowOpacity: 0.3,
         shadowRadius: 5.0,
         elevation: 10,
         minWidth: 200,
@@ -52,6 +50,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: 'grey',
         paddingTop: 3,
+        fontWeight: "600",
     },
     text2: {
         alignSelf: "flex-start",
