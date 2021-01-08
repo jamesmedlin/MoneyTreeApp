@@ -50,12 +50,14 @@ export function HomeStackScreen() {
     <Stack.Screen name="TransferMoney" component={TransferMoney} options={{
       headerTitleStyle: { color: '#FF5A5F' },
       headerTintColor: "#FF5A5F",
+      title: 'Tansfer Money',
     }} />
     <Stack.Screen name="SavedVideos" component={SavedVideos} options={{
       headerTitleStyle: {
         color: '#FF5A5F'
       },
       headerTintColor: "#FF5A5F",
+      title: 'Saved Videos',
     }} />
   </Stack.Navigator>)
 }
