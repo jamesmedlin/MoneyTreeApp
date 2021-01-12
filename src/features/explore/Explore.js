@@ -4,11 +4,9 @@ import {
     StyleSheet,
     View,
     Dimensions,
-    Button,
     Text,
     Modal,
     TouchableOpacity,
-    Linking,
     ActivityIndicator
 } from "react-native"
 import { WebView } from "react-native-webview";

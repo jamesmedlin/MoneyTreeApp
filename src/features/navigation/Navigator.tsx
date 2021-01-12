@@ -39,7 +39,8 @@ const Tab = createBottomTabNavigator();
 export function HomeStackScreen() {
   return (<Stack.Navigator initialRouteName="Home">
     <Stack.Screen name="Home" component={Home} options={{
-      headerLeft: null, headerTitleStyle: {
+      headerLeft: null,
+      headerTitleStyle: {
         color: '#FF5A5F'
       },
     }} />
@@ -50,12 +51,14 @@ export function HomeStackScreen() {
     <Stack.Screen name="TransferMoney" component={TransferMoney} options={{
       headerTitleStyle: { color: '#FF5A5F' },
       headerTintColor: "#FF5A5F",
+      title: "Transfer Money"
     }} />
     <Stack.Screen name="SavedVideos" component={SavedVideos} options={{
       headerTitleStyle: {
         color: '#FF5A5F'
       },
       headerTintColor: "#FF5A5F",
+      title: "Saved Videos"
     }} />
   </Stack.Navigator>)
 }

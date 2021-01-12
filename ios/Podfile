@@ -12,6 +12,8 @@ target 'TestApp' do
 
   pod 'react-native-config', :path => '../node_modules/react-native-config'
 
+  pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker'
+
   target 'TestAppTests' do
     inherit! :complete
     # Pods for testing
