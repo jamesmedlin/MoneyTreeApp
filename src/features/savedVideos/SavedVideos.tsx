@@ -7,14 +7,17 @@ import {
     Text,
     View,
     Dimensions,
-    ActivityIndicator
+    ActivityIndicator,
+    Modal,
+    TouchableOpacity
 } from "react-native"
 import { Colors } from "react-native/Libraries/NewAppScreen"
 import Space from "../../common/components/abstract/Space"
 import { RootStackParamsList } from "../navigation/Navigator"
 import { useAuth } from "../../providers/AuthProvider";
 import { useIsFocused } from '@react-navigation/native';
-import StatusBox from "../../common/components/StatusBox"
+import StatusBox from "../../common/components/StatusBox";
+import { WebView } from "react-native-webview";
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -30,6 +33,9 @@ const SavedVideos = ({ route, navigation }: Props) => {
     let [checkedSaved, setCheckedSaved] = useState(false);
     let isFocused = useIsFocused();
     let [savedAds, setSavedAds] = useState([])
+    let [webpage, setWebpage] = useState(false);
+    let [selectedAd, setSelectedAd] = useState(null);
+    let [unsaveLoading, setUnsaveLoading] = useState(false);
 
     useEffect(() => {
         if (!checkedSaved && isFocused && !startedChecking) {
@@ -48,19 +54,39 @@ const SavedVideos = ({ route, navigation }: Props) => {
         setCheckedSaved(true);
     }
 
+    async function unsaveAd(ad: any) {
+        setUnsaveLoading(true)
+        await user.functions.saveOrUnsaveAd(ad._id);
+        await user.refreshCustomData();
+        let result = await user.functions.getSavedAdsFull(user.customData.savedAds);
+        setSavedAds(result);
+        setUnsaveLoading(false);
+    }
+
     function renderSavedVideos() {
         if (savedAds.length != 0) {
             return (
                 <View style={{ flexDirection: "row", flexWrap: "wrap", }}>
                     {savedAds.map((ad: any) => {
-                        return (<View key={ad.name} style={{ marginHorizontal: 10, marginBottom: 20 }}>
-                            <StatusBox text={ad.name} />
-                        </View>)
+                        return (
+                            <View style={{ marginHorizontal: 10, marginBottom: 20 }} key={ad.id}>
+                                <TouchableOpacity onPress={() => {
+                                    setSelectedAd(ad)
+                                    setWebpage(true)
+                                }} key={ad.id}>
+                                    <View style={styles.unsaveContainer} key={ad.id}>
+                                        <TouchableOpacity style={styles.unsave} onPress={() => unsaveAd(ad)} key={ad.id}><Text style={styles.unsaveText} key={ad.id}>Unsave</Text></TouchableOpacity>
+                                    </View>
+                                    <View key={ad.id} style={{ marginBottom: -10, }}>
+                                        <StatusBox text={ad.name} key={ad.id} />
+                                    </View>
+                                </TouchableOpacity>
+                            </View>)
                     })}
                 </View>
             )
         } else {
-            return (<View style={{width: width - 24, alignItems: "center" }}><Text style={styles.text}>Save videos that interest you in the explore section.</Text></View>)
+            return (<View style={{ width: width - 24, alignItems: "center" }}><Text style={styles.text}>Save videos that interest you in the explore section.</Text></View>)
         }
     }
 
@@ -72,12 +98,25 @@ const SavedVideos = ({ route, navigation }: Props) => {
             >
                 <View style={styles.innerContainer}>
                     <Space.V s={10} />
-                    {startedChecking && !checkedSaved && <ActivityIndicator size="small" />}
+                    {(startedChecking && !checkedSaved) || unsaveLoading ? <ActivityIndicator size="small" /> : null}
                     <Space.V s={10} />
                     <View style={styles.blah}>
                         {checkedSaved && renderSavedVideos()}
                     </View>
                 </View>
+                {webpage && selectedAd &&
+                    <Modal animationType='slide' presentationStyle="pageSheet">
+                        <View style={styles.view}>
+                            <TouchableOpacity onPress={() => {
+                                setWebpage(false)
+                            }} style={styles.backButton}><Text style={styles.backButtonText}>Go Back To Video</Text></TouchableOpacity>
+                            <WebView
+                                source={{ uri: selectedAd.website }}
+                                startInLoadingState={true}
+                            />
+                        </View>
+                    </Modal>
+                }
             </ScrollView>
         </View >
     )
@@ -121,6 +160,34 @@ const styles = StyleSheet.create({
         fontSize: 16,
         alignSelf: "center",
         color: "black",
+    },
+    view: {
+        height: height - 50,
+    },
+    backButton: {
+        backgroundColor: "#3d4849",
+    },
+    backButtonText: {
+        color: '#FF5A5F',
+        fontSize: 22,
+        fontWeight: "600",
+        padding: 10,
+    },
+    unsaveContainer: {
+        alignItems: "center",
+        zIndex: 10,
+        width: (width - 65) / 2,
+    },
+    unsave: {
+        alignSelf: "flex-end",
+        height: 30,
+        marginRight: 12,
+        marginBottom: -25,
+    },
+    unsaveText: {
+        fontSize: 16,
+        fontWeight: "600",
+        color: "#C4C4C4",
     }
 })
 

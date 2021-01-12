@@ -12,6 +12,8 @@ target 'TestApp' do
 
   pod 'react-native-config', :path => '../node_modules/react-native-config'
 
+  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
+
   target 'TestAppTests' do
     inherit! :complete
     # Pods for testing
