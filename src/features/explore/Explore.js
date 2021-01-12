@@ -153,7 +153,7 @@ const Explore = (props) => {
                             setWebpage(false)
                             setPaused(false)
                         }} style={styles.backButton}><Text style={styles.backButtonText}>Go Back To Video</Text></TouchableOpacity>
-                        <WebView style={styles.webview}
+                        <WebView
                             source={{ uri: ad.website }}
                             startInLoadingState={true}
                         />
@@ -296,7 +296,7 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     view: {
-        height: height - 20,
+        height: height - 50,
     },
     backButton: {
         backgroundColor: "#3d4849",
@@ -384,7 +384,7 @@ const styles = StyleSheet.create({
     modal: {
         height: height / 1.3,
         justifyContent: "center",
-    }
+    },
 })
 
 export default Explore;

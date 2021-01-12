@@ -69,16 +69,16 @@ const SavedVideos = ({ route, navigation }: Props) => {
                 <View style={{ flexDirection: "row", flexWrap: "wrap", }}>
                     {savedAds.map((ad: any) => {
                         return (
-                            <View style={{ marginHorizontal: 10, marginBottom: 20 }}>
+                            <View style={{ marginHorizontal: 10, marginBottom: 20 }} key={ad.id}>
                                 <TouchableOpacity onPress={() => {
                                     setSelectedAd(ad)
                                     setWebpage(true)
-                                }}>
-                                    <View style={styles.unsaveContainer}>
-                                        <TouchableOpacity style={styles.unsave} onPress={() => unsaveAd(ad)}><Text style={styles.unsaveText}>Unsave</Text></TouchableOpacity>
+                                }} key={ad.id}>
+                                    <View style={styles.unsaveContainer} key={ad.id}>
+                                        <TouchableOpacity style={styles.unsave} onPress={() => unsaveAd(ad)} key={ad.id}><Text style={styles.unsaveText} key={ad.id}>Unsave</Text></TouchableOpacity>
                                     </View>
-                                    <View key={ad.name} style={{ marginBottom: -10, }}>
-                                        <StatusBox text={ad.name} />
+                                    <View key={ad.id} style={{ marginBottom: -10, }}>
+                                        <StatusBox text={ad.name} key={ad.id} />
                                     </View>
                                 </TouchableOpacity>
                             </View>)
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
         color: "black",
     },
     view: {
-        height: height - 20,
+        height: height - 50,
     },
     backButton: {
         backgroundColor: "#3d4849",
