@@ -32,7 +32,6 @@ const Explore = (props) => {
     let [isAlreadySaved, setAlreadySaved] = useState(null);
     let [saveLoading, setSaveLoading] = useState(false);
     let [quizLoading, setQuizLoading] = useState(false);
-    let [webLoading, setWebLoading] = useState(false);
 
     // updates page component any time the ad is changed 
     // tells video component to start playing newest ad
@@ -152,11 +151,9 @@ const Explore = (props) => {
                             setWebpage(false)
                             setPaused(false)
                         }} style={styles.backButton}><Text style={styles.backButtonText}>Go Back To Video</Text></TouchableOpacity>
-                        {webLoading && <ActivityIndicator size="large" style={{ marginTop: 10 }}/>}
-                        <WebView style={styles.webview}
+                        <WebView
                             source={{ uri: ad.website }}
-                            onLoadStart={() => setWebLoading(true)}
-                            onLoadEnd={() => setWebLoading(false)}
+                            startInLoadingState={true}
                         />
                     </View>
                 </Modal>
@@ -297,7 +294,7 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     view: {
-        height: height - 20,
+        height: height - 50,
     },
     backButton: {
         backgroundColor: "#3d4849",
@@ -385,7 +382,7 @@ const styles = StyleSheet.create({
     modal: {
         height: height / 1.3,
         justifyContent: "center",
-    }
+    },
 })
 
 export default Explore;
