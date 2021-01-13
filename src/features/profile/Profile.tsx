@@ -1,5 +1,4 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import DateTimePicker from '@react-native-community/datetimepicker';
 import React, { useEffect, useState } from "react"
 import {
     ScrollView,
@@ -20,9 +19,9 @@ import { useIsFocused } from '@react-navigation/native';
 import Geolocation from '@react-native-community/geolocation';
 import { check, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import { roundMoney } from "../../common/helpers/roundMoney"
-import { RootStoreType } from "../../redux/rootReducer"
-import { userActions } from "../../redux/slices/exampleSlice"
-import { useDispatch, useSelector } from "react-redux";
+// import { RootStoreType } from "../../redux/rootReducer"
+// import { userActions } from "../../redux/slices/exampleSlice"
+// import { useDispatch, useSelector } from "react-redux";
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -31,66 +30,18 @@ interface Props {
     navigation: StackNavigationProp<RootStackParamsList, "Profile">
 }
 
-const Redux = () => {
-    const dispatch = useDispatch()
-    const userName = useSelector(
-        (state: RootStoreType) => state.example.name
-    )
-    function onPressExample() {
-        dispatch(userActions.setName("HI"));
-    }
-    return (
-        <TouchableOpacity onPress={() => onPressExample()}><Text style={styles.signOutButtonText}>{userName}</Text></TouchableOpacity>
-    )
-}
-
-const Gender = () => {
-    let [selectedGender, setGender] = useState("");
-    return (
-        <View>
-            {selectedGender != "" && <Text>{selectedGender}</Text>}
-            <View style={{ alignItems: "center" }}>
-                <View style={{ flexDirection: "row" }}>
-                    <TouchableOpacity style={styles.genderOption} onPress={() => setGender("Male")} >
-                        {selectedGender == "Male" ? <View style={styles.selectedCircle} />
-                            : <View style={styles.circle} />}
-                        <Text style={styles.genderOptionText}>Male</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.genderOption} onPress={() => setGender("Female")} >
-                        {selectedGender == "Female" ? <View style={styles.selectedCircle} />
-                            : <View style={styles.circle} />}
-                        <Text style={styles.genderOptionText}>Female</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.genderOption} onPress={() => setGender("Other")} >
-                        {selectedGender == "Other" ? <View style={styles.selectedCircle} />
-                            : <View style={styles.circle} />}
-                        <Text style={styles.genderOptionText}>Other</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </View>
-    )
-}
-
-const Age = () => {
-    let [birthDate, setBirthDate] = useState(new Date(2000, 0, 1));
-
-    const onChange = (event: any, selectedDate: any) => {
-        const currentDate = selectedDate;
-        setBirthDate(currentDate);
-    };
-
-    return (
-        <DateTimePicker
-            value={birthDate}
-            mode="date"
-            display="spinner"
-            maximumDate={new Date(2012, 0, 1)}
-            minimumDate={new Date(1920, 0, 1)}
-            onChange={onChange}
-        />
-    )
-}
+// const Redux = () => {
+//     const dispatch = useDispatch()
+//     const userName = useSelector(
+//         (state: RootStoreType) => state.example.name
+//     )
+//     function onPressExample() {
+//         dispatch(userActions.setName("HI"));
+//     }
+//     return (
+//         <TouchableOpacity onPress={() => onPressExample()}><Text style={styles.signOutButtonText}>{userName}</Text></TouchableOpacity>
+//     )
+// }
 
 const Home = ({ navigation }: Props) => {
     let { signOut, user } = useAuth();
@@ -167,13 +118,6 @@ const Home = ({ navigation }: Props) => {
         Geolocation.requestAuthorization();
     };
 
-    let [birthDate, setBirthDate] = useState(new Date(2000, 0, 1));
-
-    const onChange = (event: any, selectedDate: any) => {
-        const currentDate = selectedDate;
-        setBirthDate(currentDate);
-    };
-
     return (
         <View style={{ justifyContent: "center", }}>
             <ScrollView
@@ -223,9 +167,6 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: "row",
         justifyContent: "space-between",
-        // paddingVertical: 10,
-        // borderTopWidth: 0.5,
-        // borderBottomWidth: 0.5,
     },
     divider: {
         marginVertical: 12,
