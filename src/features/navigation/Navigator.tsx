@@ -11,6 +11,7 @@ import Profile from "../profile/Profile"
 import Explore from "../explore/Explore"
 import OnboardingIntro from "../onboardingIntro/OnboardingIntro"
 import OnboardingGuide from "../onboardingGuide/OnboardingGuide"
+import OnboardingPersonalInfo from "../onboardingPersonalInfo/OnboardingPersonalInfo"
 import OnboardingLocation from "../onboardingLocation/OnboardingLocation"
 import TransferMoney from "../transferMoney/TransferMoney"
 import SavedVideos from "../savedVideos/SavedVideos"
@@ -28,6 +29,7 @@ export type RootStackParamsList = {
   WelcomeView: undefined
   OnboardingIntro: undefined
   OnboardingGuide: undefined
+  OnboardingPersonalInfo: undefined
   OnboardingLocation: undefined
   TransferMoney: undefined
   SavedVideos: undefined
@@ -39,7 +41,8 @@ const Tab = createBottomTabNavigator();
 export function HomeStackScreen() {
   return (<Stack.Navigator initialRouteName="Home">
     <Stack.Screen name="Home" component={Home} options={{
-      headerLeft: null, headerTitleStyle: {
+      headerLeft: null,
+      headerTitleStyle: {
         color: '#FF5A5F'
       },
     }} />
@@ -50,14 +53,14 @@ export function HomeStackScreen() {
     <Stack.Screen name="TransferMoney" component={TransferMoney} options={{
       headerTitleStyle: { color: '#FF5A5F' },
       headerTintColor: "#FF5A5F",
-      title: 'Tansfer Money',
+      title: "Transfer Money"
     }} />
     <Stack.Screen name="SavedVideos" component={SavedVideos} options={{
       headerTitleStyle: {
         color: '#FF5A5F'
       },
       headerTintColor: "#FF5A5F",
-      title: 'Saved Videos',
+      title: "Saved Videos"
     }} />
   </Stack.Navigator>)
 }
@@ -96,6 +99,7 @@ function Navigator() {
             <Stack.Screen name="WelcomeView" component={WelcomeView} options={{ headerShown: false }} />
             <Stack.Screen name="OnboardingIntro" component={OnboardingIntro} options={{ headerShown: false, gestureEnabled: false }} />
             <Stack.Screen name="OnboardingGuide" component={OnboardingGuide} options={{ headerShown: false }} />
+            <Stack.Screen name="OnboardingPersonalInfo" component={OnboardingPersonalInfo} options={{ headerShown: false }} />
             <Stack.Screen name="OnboardingLocation" component={OnboardingLocation} options={{ headerShown: false }} />
             <Tab.Screen name="Home" component={TabNavigator} options={{ headerShown: false, gestureEnabled: false }} />
           </Stack.Navigator>

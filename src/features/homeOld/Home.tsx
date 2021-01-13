@@ -14,7 +14,7 @@ import useSwr from "swr"
 import Space from "../../common/components/abstract/Space"
 import { base64Util } from "../../common/helpers/base64Util"
 import { RootStoreType } from "../../redux/rootReducer"
-import { exampleActions } from "../../redux/slices/exampleSlice"
+import { userActions } from "../../redux/slices/exampleSlice"
 import { githubService } from "../../services/network/github/githubService"
 import { RepoReadme } from "../../services/network/github/models"
 import { RootStackParamsList } from "../navigation/Navigator"
@@ -41,23 +41,23 @@ const ReduxExample = () => {
    * Redux hooks example
    */
   const dispatch = useDispatch()
-  const globalValue = useSelector(
-    (state: RootStoreType) => state.example.globalValue
-  )
+  // const globalValue = useSelector(
+  //   (state: RootStoreType) => state.example.globalValue
+  // )
 
-  const ping = () => {
-    if (globalValue === "PING") {
-      dispatch(exampleActions.pong())
-    } else {
-      dispatch(exampleActions.ping())
-    }
-  }
+  // const ping = () => {
+  //   if (globalValue === "PING") {
+  //     dispatch(userActions.pong())
+  //   } else {
+  //     dispatch(userActions.ping())
+  //   }
+  // }
 
   return (
     <>
       <Text style={styles.header}>Redux Example</Text>
       <Space.V s={8} />
-      <Button onPress={ping} title={`Dispatch ${globalValue}`} />
+      {/* <Button onPress={ping} title={`Dispatch ${globalValue}`} /> */}
     </>
   )
 }

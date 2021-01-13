@@ -49,7 +49,7 @@ const OnboardingLocation = ({ navigation }: Props) => {
                 <Space.V s={20} />
                 <Text style={styles.subtitle}>Our Promise:</Text>
                 <Space.V s={7} />
-                <Text style={styles.bodyText}>Your personal information (including location) is not shared with anyone. EVER.</Text>
+                <Text style={styles.bodyText}>Your location is not shared with anyone. EVER.</Text>
                 <Space.V s={20} />
                 <TouchableOpacity onPress={() => {
                     findCoordinates();

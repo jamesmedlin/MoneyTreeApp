@@ -1,18 +1,18 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import {
-    ScrollView,
     StyleSheet,
     Text,
     View,
     Dimensions,
-    TouchableOpacity
+    TouchableOpacity,
 } from "react-native"
 import { Colors } from "react-native/Libraries/NewAppScreen"
 import Space from "../../common/components/abstract/Space"
 import { RootStackParamsList } from "../navigation/Navigator"
 import { useAuth } from "../../providers/AuthProvider";
 import { useIsFocused } from '@react-navigation/native';
+
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -21,8 +21,7 @@ interface Props {
     navigation: StackNavigationProp<RootStackParamsList, "Home">
 }
 
-const OnboardingIntro = ({ navigation }: Props) => {
-    let { signOut, user } = useAuth();
+const OnboardingGuide = ({ navigation }: Props) => {
     // determines if this screen is currently being watched
     let focused = useIsFocused();
 
@@ -30,21 +29,25 @@ const OnboardingIntro = ({ navigation }: Props) => {
     }, [focused])
 
     // navigates user to profile
-    function goOnboardingLocation() {
-        navigation.navigate("OnboardingLocation")
+    function goOnboardingPersonalInfo() {
+        navigation.navigate("OnboardingPersonalInfo")
     };
 
     return (
         <View style={styles.onboardingContainer}>
             <View style={styles.innerContainer}>
-                <Text style={styles.title}>How it works:</Text>
-                <Space.V s={10} />
-                <Text style={styles.bodyText}>When interested, click each video to visit its website.</Text>
-                <Space.V s={3} />
-                <Text style={styles.bodyText}>Share ads you like on social media to earn extra cash!</Text>
+                <View style={styles.innerContent}>
+                    <Text style={styles.title}>How it works:</Text>
+                    <Space.V s={10} />
+                    <Text style={styles.bodyText}>When interested, click each video to visit its website.</Text>
+                    <Space.V s={3} />
+                    <Text style={styles.subtitle}>Our Promise:</Text>
+                    <Space.V s={7} />
+                    <Text style={styles.bodyText}>Your personal information is not shared with anyone. EVER.</Text>
+                </View>
             </View>
             <View style={styles.nextButtonContainer}>
-                <TouchableOpacity onPress={() => goOnboardingLocation()} style={styles.nextButton}><Text style={styles.buttonText}>Next</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => goOnboardingPersonalInfo()} style={styles.nextButton}><Text style={styles.buttonText}>Next</Text></TouchableOpacity>
             </View>
         </View>
     )
@@ -63,10 +66,12 @@ const styles = StyleSheet.create({
     },
     innerContainer: {
         marginHorizontal: 12,
-        alignItems: "center",
         marginTop: height * .3,
         flex: 1,
         paddingHorizontal: 20,
+    },
+    innerContent: {
+        alignItems: "center",
     },
     nextButton: {
         height: 40,
@@ -88,7 +93,8 @@ const styles = StyleSheet.create({
         fontWeight: "600",
     },
     subtitle: {
-        fontSize: 20,
+        color: "#FF5A5F",
+        fontSize: 24,
         fontWeight: "600",
     },
     bodyText: {
@@ -103,4 +109,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default OnboardingIntro
+export default OnboardingGuide

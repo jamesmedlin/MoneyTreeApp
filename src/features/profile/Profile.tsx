@@ -19,6 +19,9 @@ import { useIsFocused } from '@react-navigation/native';
 import Geolocation from '@react-native-community/geolocation';
 import { check, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import { roundMoney } from "../../common/helpers/roundMoney"
+// import { RootStoreType } from "../../redux/rootReducer"
+// import { userActions } from "../../redux/slices/exampleSlice"
+// import { useDispatch, useSelector } from "react-redux";
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -27,10 +30,23 @@ interface Props {
     navigation: StackNavigationProp<RootStackParamsList, "Profile">
 }
 
+// const Redux = () => {
+//     const dispatch = useDispatch()
+//     const userName = useSelector(
+//         (state: RootStoreType) => state.example.name
+//     )
+//     function onPressExample() {
+//         dispatch(userActions.setName("HI"));
+//     }
+//     return (
+//         <TouchableOpacity onPress={() => onPressExample()}><Text style={styles.signOutButtonText}>{userName}</Text></TouchableOpacity>
+//     )
+// }
+
 const Home = ({ navigation }: Props) => {
     let { signOut, user } = useAuth();
     let focused = useIsFocused();
-    let [location, setLocation] = useState("")
+    let [show, setShow] = useState(false);
 
     useEffect(() => {
     }, [focused])
@@ -98,33 +114,39 @@ const Home = ({ navigation }: Props) => {
                 console.log("Error", error);
             });
 
-
-        // 
         Geolocation.setRNConfiguration({ skipPermissionRequests: false, authorizationLevel: "whenInUse" });
         Geolocation.requestAuthorization();
     };
 
     return (
-        <View>
+        <View style={{ justifyContent: "center", }}>
             <ScrollView
                 contentInsetAdjustmentBehavior="automatic"
                 style={styles.scrollView}
             >
+                <Space.V s={20} />
                 <View style={styles.innerContainer}>
-                    <Space.V s={20} />
-                    {user && <Text style={styles.title}>Balance: ${roundMoney(user.customData.balance)}</Text>}
-                    <Space.V s={10} />
-                    {user && <Text style={styles.title}>Total Earnings: ${roundMoney(user.customData.totalEarnings)}</Text>}
-                    <Space.V s={10} />
-                    {/* <Button onPress={() => getMoviesFromApiAsync()} title="API" />
-                    <Space.V s={20} /> */}
-                    <View style={styles.settings}>
+                    <Text style={{ alignSelf: "center", fontWeight: "700", fontSize: 22 }}>Settings</Text>
+                    <View style={styles.divider} />
+                    <View style={styles.row}>
+                        <Text style={styles.title}>Balance:</Text>
+                        {user && <Text style={styles.title}>${roundMoney(user.customData.balance)}</Text>}
+                    </View>
+                    <View style={styles.divider} />
+                    <View style={styles.row}>
+                        <Text style={styles.title}>Total Earnings:</Text>
+                        {user && <Text style={styles.title}>${roundMoney(user.customData.totalEarnings)}</Text>}
+                    </View>
+                    <View style={styles.divider} />
+                    <View style={styles.row}>
                         <TouchableOpacity onPress={() => findCoordinates()}><Text style={styles.locationButtonText}>Allow Location Services</Text></TouchableOpacity>
                     </View>
-                    <Space.V s={10} />
+                    <View style={styles.divider} />
                     <TouchableOpacity onPress={() => onPressSignOut()}><Text style={styles.signOutButtonText}>Sign Out</Text></TouchableOpacity>
                 </View>
             </ScrollView>
+            {/* <Button onPress={() => getMoviesFromApiAsync()} title="API" />
+            <Space.V s={20} /> */}
         </View>
     )
 }
@@ -134,20 +156,32 @@ const styles = StyleSheet.create({
     scrollView: {
         backgroundColor: Colors.lighter,
         width,
+        height,
     },
     innerContainer: {
-        marginHorizontal: 12,
-        alignItems: "center",
+        padding: 20,
+        marginHorizontal: 20,
+        backgroundColor: "#C4C4C4",
+        borderRadius: 20
+    },
+    row: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
+    divider: {
+        marginVertical: 12,
+        borderBottomWidth: 1,
+        borderBottomColor: "grey",
+        width: width - 80,
+        alignSelf: "center"
     },
     title: {
-        alignSelf: "flex-start",
-        fontSize: 20,
-        marginLeft: 20,
+        fontSize: 18,
         fontWeight: "700",
     },
     settings: {
         width,
-        paddingHorizontal: 20,
+        marginHorizontal: 20,
         alignItems: "flex-end",
     },
     locationButtonText: {
@@ -161,6 +195,46 @@ const styles = StyleSheet.create({
         fontSize: 16,
         alignSelf: "center",
         color: "black",
+    },
+    circle: {
+        height: 22,
+        width: 22,
+        borderRadius: 11,
+        borderWidth: 2,
+    },
+    selectedCircle: {
+        height: 22,
+        width: 22,
+        borderRadius: 11,
+        borderWidth: 2,
+        backgroundColor: "orange",
+    },
+    genderOption: {
+        flexDirection: "row",
+        alignItems: 'center',
+        marginHorizontal: 8,
+    },
+    genderOptionText: {
+        fontWeight: "500",
+        fontSize: 18,
+        marginLeft: 5,
+    },
+    hello: {
+        borderRadius: 20,
+        width: 300,
+        height: 500,
+        backgroundColor: "white"
+    },
+    date: {
+        zIndex: 10,
+    },
+    dateView: {
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    birthDateText: {
+        fontWeight: "700",
+        fontSize: 16,
     }
 })
 

@@ -39,11 +39,11 @@ const OnboardingIntro = ({ navigation }: Props) => {
             <View style={styles.innerContainer}>
                 <Text style={styles.title}>Welcome!</Text>
                 <Space.V s={10} />
-                <Text style={styles.bodyText}>Earn $15/hour watching videos.</Text>
+                <Text style={styles.bodyText}>Earn $15+/hour watching videos.</Text>
                 <Space.V s={3} />
                 <Text style={styles.bodyText}>It's simple! Watch the ad, answer a question, get paid!</Text>
                 <Space.V s={20} />
-                <Text style={styles.bodyText}>Earn an extra $0.50 for every referral you make!</Text>
+                <Text style={styles.bodyText}>Refer friends and share ads you like on social media to earn extra cash!</Text>
                 <Space.V s={20} />
             </View>
             <View style={styles.nextButtonContainer}>
