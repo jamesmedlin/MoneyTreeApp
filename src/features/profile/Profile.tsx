@@ -49,7 +49,7 @@ const Gender = () => {
     return (
         <View>
             {selectedGender != "" && <Text>{selectedGender}</Text>}
-            <View style={{alignItems: "center"}}>
+            <View style={{ alignItems: "center" }}>
                 <View style={{ flexDirection: "row" }}>
                     <TouchableOpacity style={styles.genderOption} onPress={() => setGender("Male")} >
                         {selectedGender == "Male" ? <View style={styles.selectedCircle} />
@@ -180,39 +180,29 @@ const Home = ({ navigation }: Props) => {
                 contentInsetAdjustmentBehavior="automatic"
                 style={styles.scrollView}
             >
+                <Space.V s={20} />
                 <View style={styles.innerContainer}>
-                    <Space.V s={20} />
-                    {user && <Text style={styles.title}>Balance: ${roundMoney(user.customData.balance)}</Text>}
-                    <Space.V s={10} />
-                    {user && <Text style={styles.title}>Total Earnings: ${roundMoney(user.customData.totalEarnings)}</Text>}
-                    <Space.V s={10} />
-                    {/* <Button onPress={() => getMoviesFromApiAsync()} title="API" />
-                    <Space.V s={20} /> */}
-                    <View style={styles.settings}>
+                    <Text style={{ alignSelf: "center", fontWeight: "700", fontSize: 22 }}>Settings</Text>
+                    <View style={styles.divider} />
+                    <View style={styles.row}>
+                        <Text style={styles.title}>Balance:</Text>
+                        {user && <Text style={styles.title}>${roundMoney(user.customData.balance)}</Text>}
+                    </View>
+                    <View style={styles.divider} />
+                    <View style={styles.row}>
+                        <Text style={styles.title}>Total Earnings:</Text>
+                        {user && <Text style={styles.title}>${roundMoney(user.customData.totalEarnings)}</Text>}
+                    </View>
+                    <View style={styles.divider} />
+                    <View style={styles.row}>
                         <TouchableOpacity onPress={() => findCoordinates()}><Text style={styles.locationButtonText}>Allow Location Services</Text></TouchableOpacity>
                     </View>
-                    <Space.V s={10} />
-                    <Space.V s={10} />
-                    <Gender />
-                    <Space.V s={20} />
+                    <View style={styles.divider} />
                     <TouchableOpacity onPress={() => onPressSignOut()}><Text style={styles.signOutButtonText}>Sign Out</Text></TouchableOpacity>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                        <Text style={styles.birthDateText}>Birthday</Text>
-                        <Text style={styles.birthDateText}>{birthDate.toDateString()}</Text>
-                    </View>
-                    <Button title="Set Birthday" onPress={() => setShow(!show)} />
-                    {show && <DateTimePicker
-                        value={birthDate}
-                        mode="date"
-                        display="spinner"
-                        maximumDate={new Date(2008, 0, 1)}
-                        minimumDate={new Date(1920, 0, 1)}
-                        onChange={onChange}
-                        style={styles.date}
-                    />}
-                    {show && <Button title="Done" onPress={() => setShow(!show)} />}
                 </View>
             </ScrollView>
+            {/* <Button onPress={() => getMoviesFromApiAsync()} title="API" />
+            <Space.V s={20} /> */}
         </View>
     )
 }
@@ -225,18 +215,32 @@ const styles = StyleSheet.create({
         height,
     },
     innerContainer: {
-        // paddingHorizontal: 20,
-        // alignItems: "center",
+        padding: 20,
+        marginHorizontal: 20,
+        backgroundColor: "#C4C4C4",
+        borderRadius: 20
+    },
+    row: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        // paddingVertical: 10,
+        // borderTopWidth: 0.5,
+        // borderBottomWidth: 0.5,
+    },
+    divider: {
+        marginVertical: 12,
+        borderBottomWidth: 1,
+        borderBottomColor: "grey",
+        width: width - 80,
+        alignSelf: "center"
     },
     title: {
-        alignSelf: "flex-start",
-        fontSize: 20,
-        marginLeft: 20,
+        fontSize: 18,
         fontWeight: "700",
     },
     settings: {
         width,
-        paddingHorizontal: 20,
+        marginHorizontal: 20,
         alignItems: "flex-end",
     },
     locationButtonText: {

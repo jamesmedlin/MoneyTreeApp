@@ -24,71 +24,83 @@ interface Props {
     navigation: StackNavigationProp<RootStackParamsList, "Home">
 }
 
-const Gender = () => {
-    let [selectedGender, setGender] = useState("");
-    return (
-        <View>
-            <View style={styles.genderStatus}>
-                <Text>Sex:</Text>
-            </View>
-            <View style={{ alignItems: "center" }}>
-                <View style={{ flexDirection: "row" }}>
-                    <TouchableOpacity style={styles.genderOption} onPress={() => setGender("Male")} >
-                        {selectedGender == "Male" ? <View style={styles.selectedCircle} />
-                            : <View style={styles.circle} />}
-                        <Text style={styles.genderOptionText}>Male</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.genderOption} onPress={() => setGender("Female")} >
-                        {selectedGender == "Female" ? <View style={styles.selectedCircle} />
-                            : <View style={styles.circle} />}
-                        <Text style={styles.genderOptionText}>Female</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.genderOption} onPress={() => setGender("Other")} >
-                        {selectedGender == "Other" ? <View style={styles.selectedCircle} />
-                            : <View style={styles.circle} />}
-                        <Text style={styles.genderOptionText}>Other</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </View>
-    )
-}
-
-const OnboardingGuide = ({ navigation }: Props) => {
+const OnboardingPersonalInfo = ({ navigation }: Props) => {
     let { signOut, user } = useAuth();
     // determines if this screen is currently being watched
     let focused = useIsFocused();
     let [birthDate, setBirthDate] = useState(new Date(2000, 0, 1));
+    let [birthDateChanged, setBirthDateChanged] = useState(false);
+    let [selectedGender, setGender] = useState("");
 
     useEffect(() => {
     }, [focused])
 
+    const Gender = () => {
+        return (
+            <View>
+                <View style={{ alignItems: "center" }}>
+                    <View style={{ flexDirection: "row" }}>
+                        <TouchableOpacity style={styles.genderOption} onPress={() => setGender("Male")} >
+                            {selectedGender == "Male" ? <View style={styles.selectedCircle} />
+                                : <View style={styles.circle} />}
+                            <Text style={styles.genderOptionText}>Male</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.genderOption} onPress={() => setGender("Female")} >
+                            {selectedGender == "Female" ? <View style={styles.selectedCircle} />
+                                : <View style={styles.circle} />}
+                            <Text style={styles.genderOptionText}>Female</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.genderOption} onPress={() => setGender("Other")} >
+                            {selectedGender == "Other" ? <View style={styles.selectedCircle} />
+                                : <View style={styles.circle} />}
+                            <Text style={styles.genderOptionText}>Other</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View>
+        )
+    }
+
     // navigates user to profile
-    function goOnboardingPersonalInfo() {
-        navigation.navigate("OnboardingPersonalInfo")
+    async function goOnboardingLocation() {
+        navigation.navigate("OnboardingLocation");
+        // dob: birthDate.toDateString(),
+        let obj = {};
+        if (birthDateChanged) {
+            let obj = {
+                "gender": selectedGender,
+                "dob": birthDate
+            }
+            await user.functions.setPersonalInfo(obj)
+        } else {
+            let obj = {
+                "gender": selectedGender
+            }
+            await user.functions.setPersonalInfo(obj)
+        }
     };
 
     const onChange = (event: any, selectedDate: any) => {
         const currentDate = selectedDate;
         setBirthDate(currentDate);
+        setBirthDateChanged(true);
     };
 
     return (
         <View style={styles.onboardingContainer}>
             <View style={styles.innerContainer}>
                 <View style={styles.innerContent}>
-                    <Text style={styles.title}>How it works:</Text>
+                    <Text style={styles.subtitle}>Access more paid videos</Text>
                     <Space.V s={10} />
-                    <Text style={styles.bodyText}>When interested, click each video to visit its website.</Text>
-                    <Space.V s={3} />
-                    <Text style={styles.subtitle}>Our Promise:</Text>
-                    <Space.V s={7} />
-                    <Text style={styles.bodyText}>Your personal information is not shared with anyone. EVER.</Text>
+                    <Text style={styles.bodyText}>See videos that target your gender:</Text>
                 </View>
-                {/* <Space.V s={7} />
+                <Space.V s={7} />
                 <Gender />
                 <Space.V s={7} />
-                <Text>Birthdate:</Text>
+                <View style={styles.innerContent}>
+                    <Text style={styles.bodyText}>See videos that target your age:</Text>
+                </View>
+                <Space.V s={3} />
                 <DateTimePicker
                     value={birthDate}
                     mode="date"
@@ -97,10 +109,16 @@ const OnboardingGuide = ({ navigation }: Props) => {
                     minimumDate={new Date(1920, 0, 1)}
                     onChange={onChange}
                     style={styles.date}
-                /> */}
+                />
+                <Space.V s={7} />
+                <View style={styles.innerContent}>
+                    <Text style={styles.subtitle}>Our Promise:</Text>
+                    <Space.V s={7} />
+                    <Text style={styles.bodyText}>Your personal information is not shared with anyone. EVER.</Text>
+                </View>
             </View>
             <View style={styles.nextButtonContainer}>
-                <TouchableOpacity onPress={() => goOnboardingPersonalInfo()} style={styles.nextButton}><Text style={styles.buttonText}>Next</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => goOnboardingLocation()} style={styles.nextButton}><Text style={styles.buttonText}>Next</Text></TouchableOpacity>
             </View>
         </View>
     )
@@ -127,6 +145,14 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     nextButton: {
+        height: 40,
+        width: 100,
+        borderRadius: 20,
+        backgroundColor: "#3d4849",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    nextButtonInteracted: {
         height: 40,
         width: 100,
         borderRadius: 20,
@@ -171,11 +197,7 @@ const styles = StyleSheet.create({
         width: 22,
         borderRadius: 11,
         borderWidth: 2,
-        backgroundColor: "orange",
-    },
-    genderStatus: {
-        flexDirection: "row",
-        justifyContent: "space-between",
+        backgroundColor: "#FF5A5F",
     },
     genderOption: {
         flexDirection: "row",
@@ -191,4 +213,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default OnboardingGuide
+export default OnboardingPersonalInfo
