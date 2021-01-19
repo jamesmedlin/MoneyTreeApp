@@ -69,7 +69,7 @@ const Home = ({ navigation }: Props) => {
                         <View style={styles.homeContentContainer}>
                             <Tile text={`Transfer balance: $${roundMoney(user.customData.balance)}`} isCheckable={false} goTo={"TransferMoney"} />
                             <Space.V s={10} />
-                            <Tile text={`My saved videos`} isCheckable={false} goTo={"SavedVideos"} />
+                            <Tile text={`My saved ads`} isCheckable={false} goTo={"SavedVideos"} />
                             <Space.V s={7} />
                         </View>
                     }

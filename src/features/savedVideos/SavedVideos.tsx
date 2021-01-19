@@ -86,7 +86,7 @@ const SavedVideos = ({ route, navigation }: Props) => {
                 </View>
             )
         } else {
-            return (<View style={{ width: width - 24, alignItems: "center" }}><Text style={styles.text}>Save videos that interest you in the explore section.</Text></View>)
+            return (<View style={{ width: width - 24, alignItems: "center" }}><Text style={styles.text}>Save ad websites that interest you in the explore section.</Text></View>)
         }
     }
 
@@ -109,7 +109,7 @@ const SavedVideos = ({ route, navigation }: Props) => {
                         <View style={styles.view}>
                             <TouchableOpacity onPress={() => {
                                 setWebpage(false)
-                            }} style={styles.backButton}><Text style={styles.backButtonText}>Go Back To Video</Text></TouchableOpacity>
+                            }} style={styles.backButton}><Text style={styles.backButtonText}>Go Back To Saved Ads</Text></TouchableOpacity>
                             <WebView
                                 source={{ uri: selectedAd.website }}
                                 startInLoadingState={true}

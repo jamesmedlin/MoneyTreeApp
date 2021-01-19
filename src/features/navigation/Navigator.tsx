@@ -60,7 +60,7 @@ export function HomeStackScreen() {
         color: '#FF5A5F'
       },
       headerTintColor: "#FF5A5F",
-      title: "Saved Videos"
+      title: "Saved Ad Websites"
     }} />
   </Stack.Navigator>)
 }

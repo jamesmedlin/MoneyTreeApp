@@ -6,12 +6,13 @@ import {
     View,
     Dimensions,
     TouchableOpacity,
+    Button
 } from "react-native"
 import { Colors } from "react-native/Libraries/NewAppScreen"
 import Space from "../../common/components/abstract/Space"
 import { RootStackParamsList } from "../navigation/Navigator"
-import { useAuth } from "../../providers/AuthProvider";
 import { useIsFocused } from '@react-navigation/native';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 
 var width = Dimensions.get('window').width;
@@ -39,16 +40,21 @@ const OnboardingGuide = ({ navigation }: Props) => {
                 <View style={styles.innerContent}>
                     <Text style={styles.title}>How it works:</Text>
                     <Space.V s={10} />
-                    <Text style={styles.bodyText}>When interested, click each video to visit its website.</Text>
-                    <Space.V s={3} />
+                    <Text style={styles.bodyText}>Help us notify you when you have paid offers!</Text>
+                    <Space.V s={15} />
+                    <TouchableOpacity onPress={() => {
+                        PushNotificationIOS.requestPermissions();
+                        goOnboardingPersonalInfo();
+                    }} style={styles.notificationButton}><Text style={styles.buttonText}>Set Notifications</Text></TouchableOpacity>
+                    <Space.V s={20} />
                     <Text style={styles.subtitle}>Our Promise:</Text>
                     <Space.V s={7} />
-                    <Text style={styles.bodyText}>Your personal information is not shared with anyone. EVER.</Text>
+                    <Text style={styles.bodyText}>We will not spam or overload you with notifications.</Text>
                 </View>
             </View>
-            <View style={styles.nextButtonContainer}>
+            {/* <View style={styles.nextButtonContainer}>
                 <TouchableOpacity onPress={() => goOnboardingPersonalInfo()} style={styles.nextButton}><Text style={styles.buttonText}>Next</Text></TouchableOpacity>
-            </View>
+            </View> */}
         </View>
     )
 }
@@ -106,6 +112,14 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "500",
         color: "#FF5A5F",
+    },
+    notificationButton: {
+        height: 50,
+        width: 200,
+        backgroundColor: "#3d4849",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 10,
     },
 })
 

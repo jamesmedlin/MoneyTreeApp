@@ -55,6 +55,14 @@ export function WelcomeView({ navigation }) {
         setLoading(false);
     };
 
+    const onPressEnter = () => {
+        if (loginScreen) {
+            onPressSignIn();
+        } else {
+            onPressSignUp();
+        }
+    }
+
     return (
         <View style={styles.container}>
             {loading && <ActivityIndicator size="large" />}
@@ -76,6 +84,7 @@ export function WelcomeView({ navigation }) {
                     placeholder="password"
                     style={styles.inputStyle}
                     secureTextEntry
+                    onSubmitEditing={onPressEnter}
                 />
             </View>
             <Space.V s={10} />

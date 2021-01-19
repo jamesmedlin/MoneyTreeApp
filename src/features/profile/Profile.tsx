@@ -22,6 +22,7 @@ import { roundMoney } from "../../common/helpers/roundMoney"
 // import { RootStoreType } from "../../redux/rootReducer"
 // import { userActions } from "../../redux/slices/exampleSlice"
 // import { useDispatch, useSelector } from "react-redux";
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -49,7 +50,19 @@ const Home = ({ navigation }: Props) => {
     let [show, setShow] = useState(false);
 
     useEffect(() => {
+        PushNotificationIOS.addEventListener('notification', onRemoteNotification);
     }, [focused])
+
+    const onRemoteNotification = (notification: any) => {
+        const isClicked = notification.getData().userInteraction === 1;
+
+        if (isClicked) {
+            // Navigate user to another screen
+            navigation.navigate("Home")
+        } else {
+            // Do something else with push notification
+        }
+    };
 
     // signs user out of app
     const onPressSignOut = async () => {
@@ -118,6 +131,46 @@ const Home = ({ navigation }: Props) => {
         Geolocation.requestAuthorization();
     };
 
+    const notificationPermissions = () => {
+        PushNotificationIOS.checkPermissions(permission => {
+            try {
+                console.log(permission)
+                switch (permission.authorizationStatus) {
+                    // authorized
+                    case 2:
+                        Alert.alert("You have already authorized notifications.")
+                        break;
+                    // denied
+                    case 1:
+                        Alert.alert(
+                            'Allow Notifications',
+                            'This app uses notifications to let you know about new paid offers for you.',
+                            [
+                                {
+                                    text: 'Allow in settings',
+                                    onPress: async () => await Linking.openSettings()
+                                },
+                                {
+                                    text: 'Cancel',
+                                    onPress: () => console.log('Cancel Pressed'),
+                                    style: 'cancel'
+                                }
+                            ],
+                            { cancelable: false }
+                        );
+                        break;
+                    case 0:
+                        PushNotificationIOS.requestPermissions();
+                        break;
+                }
+            } catch (error) {
+                console.log("Error ", error);
+            }
+        }
+
+        );
+    }
+
     return (
         <View style={{ justifyContent: "center", }}>
             <ScrollView
@@ -142,8 +195,13 @@ const Home = ({ navigation }: Props) => {
                         <TouchableOpacity onPress={() => findCoordinates()}><Text style={styles.locationButtonText}>Allow Location Services</Text></TouchableOpacity>
                     </View>
                     <View style={styles.divider} />
+                    <View style={styles.row}>
+                        <TouchableOpacity onPress={() => notificationPermissions()}><Text style={styles.locationButtonText}>Allow Notification Services</Text></TouchableOpacity>
+                    </View>
+                    <View style={styles.divider} />
                     <TouchableOpacity onPress={() => onPressSignOut()}><Text style={styles.signOutButtonText}>Sign Out</Text></TouchableOpacity>
                 </View>
+                <Button onPress={() => PushNotificationIOS.addNotificationRequest({ id: "testNotification", title: "Test Title", subtitle: "Test Subtitle", body: "Test Body", fireDate: new Date(Date.now() + (10 * 1000)) })} title="Notify" />
             </ScrollView>
             {/* <Button onPress={() => getMoviesFromApiAsync()} title="API" />
             <Space.V s={20} /> */}

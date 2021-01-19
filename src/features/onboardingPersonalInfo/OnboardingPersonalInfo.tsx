@@ -50,10 +50,10 @@ const OnboardingPersonalInfo = ({ navigation }: Props) => {
                                 : <View style={styles.circle} />}
                             <Text style={styles.genderOptionText}>Female</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.genderOption} onPress={() => setGender("Other")} >
-                            {selectedGender == "Other" ? <View style={styles.selectedCircle} />
+                        <TouchableOpacity style={styles.genderOption} onPress={() => setGender("Non-binary")} >
+                            {selectedGender == "Non-binary" ? <View style={styles.selectedCircle} />
                                 : <View style={styles.circle} />}
-                            <Text style={styles.genderOptionText}>Other</Text>
+                            <Text style={styles.genderOptionText}>Non-binary</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -109,6 +109,7 @@ const OnboardingPersonalInfo = ({ navigation }: Props) => {
                     minimumDate={new Date(1920, 0, 1)}
                     onChange={onChange}
                     style={styles.date}
+                    textColor="#FF5A5F"
                 />
                 <Space.V s={7} />
                 <View style={styles.innerContent}>
