@@ -1,6 +1,6 @@
 {
-    "id": "5fde7bed7baab492c5f4320e",
-    "name": "createAdvertisement",
-    "private": false,
-    "run_as_system": true
+  "id": "5fde7bed7baab492c5f4320e",
+  "name": "createAdvertisement",
+  "private": false,
+  "run_as_system": true
 }

@@ -7,28 +7,28 @@ import { ListItem, Overlay } from "react-native-elements";
 // closeOverlay function that this component will call to request that the
 // action sheet be closed.
 export function ActionSheet({ actions, visible, closeOverlay }) {
-    const cancelAction = {
-        title: "Cancel",
-        action: closeOverlay,
-    };
-    return (
-        <Overlay
-            overlayStyle={{ width: "90%" }}
-            isVisible={visible}
-            onBackdropPress={closeOverlay}
-        >
-            <>
-                {[...actions, cancelAction].map(({ title, action }) => (
-                    <ListItem
-                        key={title}
-                        title={title}
-                        onPress={() => {
-                            closeOverlay();
-                            action();
-                        }}
-                    />
-                ))}
-            </>
-        </Overlay>
-    );
+  const cancelAction = {
+    title: "Cancel",
+    action: closeOverlay,
+  };
+  return (
+    <Overlay
+      overlayStyle={{ width: "90%" }}
+      isVisible={visible}
+      onBackdropPress={closeOverlay}
+    >
+      <>
+        {[...actions, cancelAction].map(({ title, action }) => (
+          <ListItem
+            key={title}
+            title={title}
+            onPress={() => {
+              closeOverlay();
+              action();
+            }}
+          />
+        ))}
+      </>
+    </Overlay>
+  );
 }

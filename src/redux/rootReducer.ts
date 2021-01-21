@@ -1,8 +1,8 @@
-import { combineReducers } from "redux"
-import { userReducer } from './slices/exampleSlice'
+import { combineReducers } from "redux";
+import { userReducer } from "./slices/exampleSlice";
 
 export const rootReducer = combineReducers({
-  example: userReducer
-})
+  example: userReducer,
+});
 
-export type RootStoreType = ReturnType<typeof rootReducer>
+export type RootStoreType = ReturnType<typeof rootReducer>;

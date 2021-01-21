@@ -16,6 +16,8 @@ target 'TestApp' do
 
   pod 'react-native-webview', :path => '../node_modules/react-native-webview'
 
+  pod 'Firebase/Messaging'
+
   target 'TestAppTests' do
     inherit! :complete
     # Pods for testing

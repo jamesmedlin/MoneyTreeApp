@@ -3,5 +3,5 @@ exports = async function () {
   const collection = cluster.db("application").collection("User");
   const caller = context.user;
 
-  return await collection.findOne({ _id: caller._id })
+  return await collection.findOne({ _id: caller._id });
 };

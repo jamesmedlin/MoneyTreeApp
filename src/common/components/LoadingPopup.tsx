@@ -1,16 +1,16 @@
-import React from "react"
-import { Text, View, ActivityIndicator, StyleSheet } from "react-native"
-import Animated from "react-native-reanimated"
-import { useTimingTransition } from "react-native-redash"
-import Portal from "./abstract/Portal"
+import React from "react";
+import { Text, View, ActivityIndicator, StyleSheet } from "react-native";
+import Animated from "react-native-reanimated";
+import { useTimingTransition } from "react-native-redash";
+import Portal from "./abstract/Portal";
 
 interface LoadingPopupProps {
-  visible: boolean
+  visible: boolean;
 }
 const LoadingPopup = ({ visible }: LoadingPopupProps) => {
   const opacity = useTimingTransition(visible, {
     duration: visible ? 100 : 50,
-  })
+  });
 
   return (
     <Animated.View pointerEvents="none" style={[styles.backdrop, { opacity }]}>
@@ -19,8 +19,8 @@ const LoadingPopup = ({ visible }: LoadingPopupProps) => {
         <Text style={styles.text}>Please wait...</Text>
       </View>
     </Animated.View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   backdrop: {
@@ -58,6 +58,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     lineHeight: 18,
   },
-})
+});
 
-export default LoadingPopup
+export default LoadingPopup;

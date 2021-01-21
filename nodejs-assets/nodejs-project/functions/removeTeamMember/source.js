@@ -1,5 +1,8 @@
 exports = async function () {
-  const collection = context.services.get("mongodb-atlas").db("application").collection("User");
+  const collection = context.services
+    .get("mongodb-atlas")
+    .db("application")
+    .collection("User");
   const callingUser = context.user;
   console.log("calling user .id", callingUser.id);
   const filter = { _id: callingUser.id };
@@ -9,9 +12,7 @@ exports = async function () {
   }
 
   try {
-    return await collection.deleteOne(
-      { _id: memberToRemove._id },
-    );
+    return await collection.deleteOne({ _id: memberToRemove._id });
   } catch (error) {
     return { error: error.toString() };
   }

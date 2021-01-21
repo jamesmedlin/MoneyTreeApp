@@ -1,5 +1,5 @@
-import { StackNavigationProp } from "@react-navigation/stack"
-import React from "react"
+import { StackNavigationProp } from "@react-navigation/stack";
+import React from "react";
 import {
   Button,
   Platform,
@@ -8,25 +8,25 @@ import {
   StyleSheet,
   Text,
   View,
-} from "react-native"
+} from "react-native";
 import {
   Colors,
   DebugInstructions,
   Header,
   LearnMoreLinks,
   ReloadInstructions,
-} from "react-native/Libraries/NewAppScreen"
-import { RootStackParamsList } from "../navigation/Navigator"
-import BuildConfig from "react-native-config"
+} from "react-native/Libraries/NewAppScreen";
+import { RootStackParamsList } from "../navigation/Navigator";
+import BuildConfig from "react-native-config";
 
-declare let global: { HermesInternal: null | {} }
+declare let global: { HermesInternal: null | {} };
 
 interface Props {
-  navigation: StackNavigationProp<RootStackParamsList, "Landing">
+  navigation: StackNavigationProp<RootStackParamsList, "Landing">;
 }
 
 const Landing = ({ navigation }: Props) => {
-  const goHome = () => navigation.navigate("Home")
+  const goHome = () => navigation.navigate("Home");
 
   return (
     <View>
@@ -94,8 +94,8 @@ const Landing = ({ navigation }: Props) => {
         </View>
       </ScrollView>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -156,6 +156,6 @@ const styles = StyleSheet.create({
     right: 10,
     top: 10,
   },
-})
+});
 
-export default Landing
+export default Landing;
