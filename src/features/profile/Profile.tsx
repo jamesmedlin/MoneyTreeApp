@@ -191,6 +191,9 @@ const Home = ({ navigation }: Props) => {
           case undefined:
           case 0:
             await messaging().requestPermission();
+            await messaging()
+              .subscribeToTopic("general")
+              .then(() => console.log("Subscribed to general topic!"));
             break;
         }
       } catch (error) {
