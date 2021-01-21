@@ -1,42 +1,36 @@
 {
-    "collection": "User",
-    "database": "application",
-    "id": "5fc1a7132f3471ab2852b6e1",
-    "roles": [
-        {
-            "name": "default",
-            "apply_when": {},
-            "insert": true,
-            "delete": true,
-            "search": true,
-            "additional_fields": {}
-        }
-    ],
-    "schema": {
-        "properties": {
-            "_id": {
-                "bsonType": "string"
-            },
-            "_partition": {
-                "bsonType": "string"
-            },
-            "balance": {
-                "bsonType": "double"
-            },
-            "email": {
-                "bsonType": "string"
-            },
-            "totalEarnings": {
-                "bsonType": "double"
-            }
-        },
-        "required": [
-            "_id",
-            "_partition",
-            "email",
-            "balance",
-            "totalEarnings"
-        ],
-        "title": "User"
+  "collection": "User",
+  "database": "application",
+  "id": "5fc1a7132f3471ab2852b6e1",
+  "roles": [
+    {
+      "name": "default",
+      "apply_when": {},
+      "insert": true,
+      "delete": true,
+      "search": true,
+      "additional_fields": {}
     }
+  ],
+  "schema": {
+    "properties": {
+      "_id": {
+        "bsonType": "string"
+      },
+      "_partition": {
+        "bsonType": "string"
+      },
+      "balance": {
+        "bsonType": "double"
+      },
+      "email": {
+        "bsonType": "string"
+      },
+      "totalEarnings": {
+        "bsonType": "double"
+      }
+    },
+    "required": ["_id", "_partition", "email", "balance", "totalEarnings"],
+    "title": "User"
+  }
 }

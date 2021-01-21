@@ -1,39 +1,37 @@
 {
-    "id": "5fc1a7122f3471ab2852b63f",
-    "name": "mongodb-atlas",
-    "type": "mongodb-atlas",
-    "config": {
-        "clusterName": "Cluster0",
-        "readPreference": "primary",
-        "sync": {
-            "state": "enabled",
-            "database_name": "application",
-            "partition": {
-                "key": "_partition",
-                "type": "string",
-                "required": true,
-                "permissions": {
-                    "read": {
-                        "$or": [
-                            {
-                                "%%user.id": "%%partition"
-                            },
-                            {
-                                "%%user.custom_data.canReadPartitions": {
-                                    "$in": [
-                                        "%%partition"
-                                    ]
-                                }
-                            }
-                        ]
-                    },
-                    "write": {
-                        "%%user.id": "%%partition"
-                    }
+  "id": "5fc1a7122f3471ab2852b63f",
+  "name": "mongodb-atlas",
+  "type": "mongodb-atlas",
+  "config": {
+    "clusterName": "Cluster0",
+    "readPreference": "primary",
+    "sync": {
+      "state": "enabled",
+      "database_name": "application",
+      "partition": {
+        "key": "_partition",
+        "type": "string",
+        "required": true,
+        "permissions": {
+          "read": {
+            "$or": [
+              {
+                "%%user.id": "%%partition"
+              },
+              {
+                "%%user.custom_data.canReadPartitions": {
+                  "$in": ["%%partition"]
                 }
-            }
-        },
-        "wireProtocolEnabled": false
+              }
+            ]
+          },
+          "write": {
+            "%%user.id": "%%partition"
+          }
+        }
+      }
     },
-    "version": 1
+    "wireProtocolEnabled": false
+  },
+  "version": 1
 }

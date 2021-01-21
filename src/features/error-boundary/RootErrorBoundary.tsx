@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component } from "react";
 import {
   Alert,
   Clipboard,
@@ -8,28 +8,28 @@ import {
   StyleSheet,
   Text,
   View,
-} from "react-native"
-import SplashScreen from "react-native-bootsplash"
+} from "react-native";
+import SplashScreen from "react-native-bootsplash";
 
 /**
  * Example UI to show in the case of a JavaScript error.
  * TODO: also handle native exceptions.
  */
 export default class RootErrorBoundary extends Component {
-  private static NO_STACK = "No stack trace."
-  private static ISSUE_REPORTING_URL = "https://reactnative.dev"
+  private static NO_STACK = "No stack trace.";
+  private static ISSUE_REPORTING_URL = "https://reactnative.dev";
 
   state: { hasError: boolean; error: Error | null } = {
     hasError: false,
     error: null,
-  }
+  };
 
   static getDerivedStateFromError(error: Error) {
-    return { hasError: true, error }
+    return { hasError: true, error };
   }
 
   componentDidCatch() {
-    SplashScreen.hide({ duration: 250 })
+    SplashScreen.hide({ duration: 250 });
   }
 
   showError = () => {
@@ -40,33 +40,33 @@ export default class RootErrorBoundary extends Component {
         {
           text: "Cancel",
           onPress: () => {
-            return
+            return;
           },
         },
         {
           text: "Copy & Open Issue Form",
           onPress: () => {
             const stackTrace =
-              this.state.error?.stack || RootErrorBoundary.NO_STACK
+              this.state.error?.stack || RootErrorBoundary.NO_STACK;
 
-            Clipboard.setString(stackTrace)
+            Clipboard.setString(stackTrace);
 
-            Linking.openURL(RootErrorBoundary.ISSUE_REPORTING_URL)
+            Linking.openURL(RootErrorBoundary.ISSUE_REPORTING_URL);
           },
         },
       ],
       {
         cancelable: false,
       }
-    )
-  }
+    );
+  };
 
   /**
    * TODO: Restart app instead of reload.
    */
   reloadApp = () => {
-    NativeModules.DevSettings.reload()
-  }
+    NativeModules.DevSettings.reload();
+  };
 
   render() {
     if (this.state.hasError) {
@@ -90,10 +90,10 @@ export default class RootErrorBoundary extends Component {
             )}
           </View>
         </View>
-      )
+      );
     }
 
-    return this.props.children
+    return this.props.children;
   }
 }
 
@@ -128,4 +128,4 @@ const styles = StyleSheet.create({
   bold: {
     fontWeight: "bold",
   },
-})
+});

@@ -1,4 +1,3 @@
-
 /*
   This function will be run when the client SDK 'callResetPasswordFunction' and is called with an object parameter
   which contains four keys: 'token', 'tokenId', 'username', and 'password', and additional parameters
@@ -41,6 +40,6 @@
 */
 
 exports = ({ token, tokenId, username, password }) => {
-    // will not reset the password
-    return { status: 'fail' };
+  // will not reset the password
+  return { status: "fail" };
 };

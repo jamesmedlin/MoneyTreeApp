@@ -1,85 +1,80 @@
 {
-    "collection": "Advertisement",
-    "database": "application",
-    "id": "5fde67ab819d9e09fa23912e",
-    "roles": [
-        {
-            "name": "default",
-            "apply_when": {},
-            "insert": true,
-            "delete": true,
-            "search": true,
-            "additional_fields": {}
-        }
-    ],
-    "schema": {
-        "bsonType": "object",
-        "properties": {
-            "_id": {
-                "bsonType": "string"
-            },
-            "_partition": {
-                "bsonType": "string"
-            },
-            "correctAnswer": {
-                "bsonType": "string"
-            },
-            "cpcv": {
-                "bsonType": "double"
-            },
-            "dailyBudget": {
-                "bsonType": "double"
-            },
-            "isActive": {
-                "bsonType": "bool"
-            },
-            "latitude": {
-                "bsonType": "double"
-            },
-            "longitude": {
-                "bsonType": "double"
-            },
-            "name": {
-                "bsonType": "string"
-            },
-            "question": {
-                "bsonType": "string"
-            },
-            "quiz": {
-                "bsonType": "array",
-                "items": {
-                    "bsonType": "string"
-                },
-                "maxItems": 3
-            },
-            "radius": {
-                "bsonType": "double"
-            },
-            "specifiesLocation": {
-                "bsonType": "bool"
-            },
-            "totalOwed": {
-                "bsonType": "double"
-            },
-            "uri": {
-                "bsonType": "string"
-            },
-            "viewers": {
-                "bsonType": "array",
-                "items": {
-                    "bsonType": "string"
-                }
-            },
-            "website": {
-                "bsonType": "string"
-            }
-        },
-        "required": [
-            "_id",
-            "_partition",
-            "name",
-            "uri"
-        ],
-        "title": "Advertisement"
+  "collection": "Advertisement",
+  "database": "application",
+  "id": "5fde67ab819d9e09fa23912e",
+  "roles": [
+    {
+      "name": "default",
+      "apply_when": {},
+      "insert": true,
+      "delete": true,
+      "search": true,
+      "additional_fields": {}
     }
+  ],
+  "schema": {
+    "bsonType": "object",
+    "properties": {
+      "_id": {
+        "bsonType": "string"
+      },
+      "_partition": {
+        "bsonType": "string"
+      },
+      "correctAnswer": {
+        "bsonType": "string"
+      },
+      "cpcv": {
+        "bsonType": "double"
+      },
+      "dailyBudget": {
+        "bsonType": "double"
+      },
+      "isActive": {
+        "bsonType": "bool"
+      },
+      "latitude": {
+        "bsonType": "double"
+      },
+      "longitude": {
+        "bsonType": "double"
+      },
+      "name": {
+        "bsonType": "string"
+      },
+      "question": {
+        "bsonType": "string"
+      },
+      "quiz": {
+        "bsonType": "array",
+        "items": {
+          "bsonType": "string"
+        },
+        "maxItems": 3
+      },
+      "radius": {
+        "bsonType": "double"
+      },
+      "specifiesLocation": {
+        "bsonType": "bool"
+      },
+      "totalOwed": {
+        "bsonType": "double"
+      },
+      "uri": {
+        "bsonType": "string"
+      },
+      "viewers": {
+        "bsonType": "array",
+        "items": {
+          "bsonType": "string"
+        }
+      },
+      "website": {
+        "bsonType": "string"
+      }
+    },
+    "required": ["_id", "_partition", "name", "uri"],
+    "title": "Advertisement"
+  }
 }

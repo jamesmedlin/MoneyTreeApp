@@ -1,11 +1,11 @@
-import React, { useMemo, useRef, useEffect } from "react"
-import { StyleSheet, StatusBar, BackHandler, Keyboard } from "react-native"
-import Animated from "react-native-reanimated"
-import { timing } from "react-native-redash"
-import { useFocusEffect } from "@react-navigation/native"
+import React, { useMemo, useRef, useEffect } from "react";
+import { StyleSheet, StatusBar, BackHandler, Keyboard } from "react-native";
+import Animated from "react-native-reanimated";
+import { timing } from "react-native-redash";
+import { useFocusEffect } from "@react-navigation/native";
 
 function useBackgroundOverlay(visible: boolean, onTouchStart: () => void) {
-  const isFirstRender = useRef(true)
+  const isFirstRender = useRef(true);
   const opacity = useMemo(
     () =>
       isFirstRender.current
@@ -15,28 +15,28 @@ function useBackgroundOverlay(visible: boolean, onTouchStart: () => void) {
             to: visible ? 0.2 : 0,
           }),
     [visible]
-  )
+  );
 
   useEffect(() => {
-    isFirstRender.current = false
-  }, [])
+    isFirstRender.current = false;
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
         if (visible) {
-          onTouchStart()
-          return true
+          onTouchStart();
+          return true;
         } else {
-          return false
+          return false;
         }
-      }
-      BackHandler.addEventListener("hardwareBackPress", onBackPress)
+      };
+      BackHandler.addEventListener("hardwareBackPress", onBackPress);
 
       return () =>
-        BackHandler.removeEventListener("hardwareBackPress", onBackPress)
+        BackHandler.removeEventListener("hardwareBackPress", onBackPress);
     }, [onTouchStart, visible])
-  )
+  );
 
   return (
     <>
@@ -44,8 +44,8 @@ function useBackgroundOverlay(visible: boolean, onTouchStart: () => void) {
       <Animated.View
         pointerEvents={visible ? "auto" : "none"}
         onTouchStart={() => {
-          Keyboard.dismiss()
-          onTouchStart()
+          Keyboard.dismiss();
+          onTouchStart();
         }}
         style={[
           styles.overlay,
@@ -55,7 +55,7 @@ function useBackgroundOverlay(visible: boolean, onTouchStart: () => void) {
         ]}
       />
     </>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -65,6 +65,6 @@ const styles = StyleSheet.create({
     elevation: 1,
     backgroundColor: "black",
   },
-})
+});
 
-export default useBackgroundOverlay
+export default useBackgroundOverlay;

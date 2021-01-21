@@ -1,19 +1,19 @@
-import React, { useEffect, useMemo, useRef } from "react"
-import { StyleSheet, Text, View } from "react-native"
-import { TouchableOpacity } from "react-native-gesture-handler"
-import Animated, { cond, neq, set, useCode } from "react-native-reanimated"
-import { bin, timing, useValue } from "react-native-redash"
-import { useSafeArea } from "react-native-safe-area-context"
+import React, { useEffect, useMemo, useRef } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import Animated, { cond, neq, set, useCode } from "react-native-reanimated";
+import { bin, timing, useValue } from "react-native-redash";
+import { useSafeArea } from "react-native-safe-area-context";
 
-const SNACKBAR_HEIGHT = 54
+const SNACKBAR_HEIGHT = 54;
 
 interface SnackbarProps {
-  visible: boolean
-  message: string
-  onDismiss: () => void
-  onPress?: () => void
-  btnTitle?: string
-  unsafeView?: boolean
+  visible: boolean;
+  message: string;
+  onDismiss: () => void;
+  onPress?: () => void;
+  btnTitle?: string;
+  unsafeView?: boolean;
 }
 const Snackbar = ({
   visible,
@@ -23,14 +23,14 @@ const Snackbar = ({
   onPress,
   unsafeView,
 }: SnackbarProps) => {
-  const timeoutRef = useRef(-1)
-  const insets = useSafeArea()
+  const timeoutRef = useRef(-1);
+  const insets = useSafeArea();
   const safeArea = !unsafeView
     ? insets
-    : { top: 0, bottom: 0, left: 0, right: 0 }
+    : { top: 0, bottom: 0, left: 0, right: 0 };
   const snackbarHeight =
-    SNACKBAR_HEIGHT + safeArea.bottom + safeArea.bottom / 2 + 10
-  const translateY = useValue(snackbarHeight)
+    SNACKBAR_HEIGHT + safeArea.bottom + safeArea.bottom / 2 + 10;
+  const translateY = useValue(snackbarHeight);
   const opacity = useMemo(
     () =>
       timing({
@@ -40,7 +40,7 @@ const Snackbar = ({
       }),
     // eslint-disable-next-line
     [message]
-  )
+  );
 
   useCode(
     () => [
@@ -68,27 +68,27 @@ const Snackbar = ({
       ),
     ],
     [visible, snackbarHeight, translateY]
-  )
+  );
 
   useEffect(() => {
     if (visible) {
       timeoutRef.current = setTimeout(() => {
-        onDismiss()
-      }, 3000)
+        onDismiss();
+      }, 3000);
     }
 
-    return clearTimeoutRef
-  }, [onDismiss, visible])
+    return clearTimeoutRef;
+  }, [onDismiss, visible]);
 
-  const clearTimeoutRef = () => clearTimeout(timeoutRef.current)
+  const clearTimeoutRef = () => clearTimeout(timeoutRef.current);
 
   const handleOnPress = () => {
-    onDismiss()
-    clearTimeout(timeoutRef.current)
+    onDismiss();
+    clearTimeout(timeoutRef.current);
     setTimeout(() => {
-      onPress!()
-    }, 150)
-  }
+      onPress!();
+    }, 150);
+  };
 
   return (
     <View style={styles.container}>
@@ -151,8 +151,8 @@ const Snackbar = ({
         </TouchableOpacity>
       </Animated.View>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   touchable: {
@@ -184,6 +184,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     zIndex: 10,
   },
-})
+});
 
-export default Snackbar
+export default Snackbar;

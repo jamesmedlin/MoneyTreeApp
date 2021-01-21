@@ -7,39 +7,39 @@ import styles from "../stylesheet";
 // "Create" button on the overlay is pressed, the overlay closes and the new
 // task is created in the realm.
 export function AddTask({ createTask }) {
-    const [overlayVisible, setOverlayVisible] = useState(false);
-    const [newTaskName, setNewTaskName] = useState("");
+  const [overlayVisible, setOverlayVisible] = useState(false);
+  const [newTaskName, setNewTaskName] = useState("");
 
-    return (
+  return (
+    <>
+      <Overlay
+        isVisible={overlayVisible}
+        overlayStyle={{ width: "90%" }}
+        onBackdropPress={() => setOverlayVisible(false)}
+      >
         <>
-            <Overlay
-                isVisible={overlayVisible}
-                overlayStyle={{ width: "90%" }}
-                onBackdropPress={() => setOverlayVisible(false)}
-            >
-                <>
-                    <Input
-                        placeholder="New Task Name"
-                        onChangeText={(text) => setNewTaskName(text)}
-                        autoFocus={true}
-                    />
-                    <Button
-                        title="Create"
-                        onPress={() => {
-                            setOverlayVisible(false);
-                            createTask(newTaskName);
-                        }}
-                    />
-                </>
-            </Overlay>
-            <Button
-                type="clear"
-                titleStyle={styles.plusButton}
-                title="&#x2b;"
-                onPress={() => {
-                    setOverlayVisible(true);
-                }}
-            />
+          <Input
+            placeholder="New Task Name"
+            onChangeText={(text) => setNewTaskName(text)}
+            autoFocus={true}
+          />
+          <Button
+            title="Create"
+            onPress={() => {
+              setOverlayVisible(false);
+              createTask(newTaskName);
+            }}
+          />
         </>
-    );
+      </Overlay>
+      <Button
+        type="clear"
+        titleStyle={styles.plusButton}
+        title="&#x2b;"
+        onPress={() => {
+          setOverlayVisible(true);
+        }}
+      />
+    </>
+  );
 }

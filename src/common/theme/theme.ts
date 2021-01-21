@@ -1,13 +1,11 @@
-
 const palette = {
   colors: {
     black: "#222",
     white: "#fff",
   },
   fonts: {
-    // For example only. 
+    // For example only.
     // Fonts must be linked to be used
-
     // montserrat: {
     //   regular: 'montserrat_regular',
     //   medium: 'montserrat_medium',
@@ -18,9 +16,8 @@ const palette = {
     //   medium: 'firasans_medium',
     //   bold: 'firasans_bold',
     // },
-  }
-}
-
+  },
+};
 
 export const theme = {
   background: palette.colors.white,
@@ -38,5 +35,5 @@ export const theme = {
       fontSize: 14,
       // fontFamily: palette.fonts.firasans.regular
     },
-  }
-}
+  },
+};

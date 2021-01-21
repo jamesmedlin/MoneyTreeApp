@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo } from "react"
+import React, { ReactNode, useMemo } from "react";
 import Animated, {
   cond,
   multiply,
@@ -7,20 +7,20 @@ import Animated, {
   set,
   useCode,
   Value,
-} from "react-native-reanimated"
-import { bin, spring, useValue } from "react-native-redash"
-import { StyleSheet, ViewStyle } from "react-native"
-import { layoutUtil } from "../helpers/layoutUtil"
+} from "react-native-reanimated";
+import { bin, spring, useValue } from "react-native-redash";
+import { StyleSheet, ViewStyle } from "react-native";
+import { layoutUtil } from "../helpers/layoutUtil";
 
-const HEIGHT_OFFSET = 0.7
-const TUCK_IN_HEIGHT = -0.05 * layoutUtil.height
+const HEIGHT_OFFSET = 0.7;
+const TUCK_IN_HEIGHT = -0.05 * layoutUtil.height;
 
 interface Props {
-  children: ReactNode
-  visible: boolean
-  cardHeight?: number
-  almostTuckedIn?: boolean
-  cardStyle?: ViewStyle
+  children: ReactNode;
+  visible: boolean;
+  cardHeight?: number;
+  almostTuckedIn?: boolean;
+  cardStyle?: ViewStyle;
 }
 
 const CardModal = ({
@@ -30,13 +30,13 @@ const CardModal = ({
   almostTuckedIn = false,
   cardStyle,
 }: Props) => {
-  const animation = useValue(0)
+  const animation = useValue(0);
   const heightValue = useMemo(() => multiply(-cardHeight, HEIGHT_OFFSET), [
     cardHeight,
-  ])
+  ]);
 
-  const isTuckedIn = bin(visible)
-  const isAlmostTuckedIn = bin(almostTuckedIn)
+  const isTuckedIn = bin(visible);
+  const isAlmostTuckedIn = bin(almostTuckedIn);
 
   useCode(
     () => [
@@ -71,7 +71,7 @@ const CardModal = ({
       ),
     ],
     [visible, heightValue, almostTuckedIn]
-  )
+  );
 
   return (
     <>
@@ -89,8 +89,8 @@ const CardModal = ({
         {children}
       </Animated.View>
     </>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   card: {
@@ -110,6 +110,6 @@ const styles = StyleSheet.create({
     elevation: 6,
     zIndex: 10,
   },
-})
+});
 
-export default React.memo(CardModal)
+export default React.memo(CardModal);

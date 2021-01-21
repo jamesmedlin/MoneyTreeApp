@@ -15,6 +15,8 @@
 
 #import <UserNotifications/UserNotifications.h>
 #import <RNCPushNotificationIOS.h>
+// #import <TSBackgroundFetch/TSBackgroundFetch.h>
+#import <Firebase.h>
 
 static void InitializeFlipper(UIApplication *application) {
   FlipperClient *client = [FlipperClient sharedClient];
@@ -85,6 +87,13 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
   center.delegate = self;
+  
+  // // [REQUIRED] Register BackgroundFetch
+  // [[TSBackgroundFetch sharedInstance] didFinishLaunching];
+
+if ([FIRApp defaultApp] == nil) {
+    [FIRApp configure];
+  }
   
   return YES;
 }
