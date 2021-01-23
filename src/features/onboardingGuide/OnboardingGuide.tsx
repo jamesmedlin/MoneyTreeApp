@@ -6,7 +6,6 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
-  Button,
 } from "react-native";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import Space from "../../common/components/abstract/Space";
@@ -44,7 +43,7 @@ const OnboardingGuide = ({ navigation }: Props) => {
     <View style={styles.onboardingContainer}>
       <View style={styles.innerContainer}>
         <View style={styles.innerContent}>
-          <Text style={styles.title}>How it works:</Text>
+          <Text style={styles.title}>Time to make money!</Text>
           <Space.V s={10} />
           <Text style={styles.bodyText}>
             Help us notify you when you have paid offers!

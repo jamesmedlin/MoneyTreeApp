@@ -49,6 +49,9 @@ export function HomeStackScreen() {
           headerTitleStyle: {
             color: "#FF5A5F",
           },
+          // headerStyle: {
+          //   backgroundColor: '#48D9D9',
+          // }
         }}
       />
       <Stack.Screen
@@ -93,6 +96,10 @@ export function TabNavigator() {
           fontWeight: "700",
         },
         activeTintColor: "#FF5A5F",
+        // headerTintColor: "#3d4849",
+        style: {
+          backgroundColor: '#3d4849',
+        },
       }}
     >
       <Tab.Screen

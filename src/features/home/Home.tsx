@@ -85,18 +85,20 @@ const Home = ({ navigation }: Props) => {
       >
         <View style={styles.innerContainer}>
           <Space.V s={20} />
-          <Text style={styles.title}>Hello!</Text>
+          {/* <Text style={styles.title}>Hello!</Text> */}
           <Space.V s={10} />
-          <View style={styles.profileContainer}>
-            <View style={styles.profilePicture}></View>
-            <Space.V s={3} />
-            <TouchableOpacity
-              onPress={() => onPressGoProfile()}
-              style={styles.profileButton}
-            >
-              <Text style={styles.profileButtonText}>Profile</Text>
-            </TouchableOpacity>
-          </View>
+            <View style={styles.profileContainer}>
+          <TouchableOpacity
+            onPress={() => onPressGoProfile()}>
+              <View style={styles.profilePicture}></View>
+              <Space.V s={3} />
+              <View
+                style={styles.profileButton}
+              >
+                <Text style={styles.profileButtonText}>Profile</Text>
+              </View>
+          </TouchableOpacity>
+            </View>
           <Space.V s={30} />
           {user && (
             <View style={styles.homeContentContainer}>
