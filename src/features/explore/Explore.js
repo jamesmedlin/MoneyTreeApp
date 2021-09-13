@@ -16,8 +16,8 @@ import { useIsFocused } from "@react-navigation/native";
 import Geolocation from "@react-native-community/geolocation";
 import { check, PERMISSIONS, RESULTS } from "react-native-permissions";
 
-var width = Dimensions.get("window").width;
-var height = Dimensions.get("window").height;
+const width = Dimensions.get("window").width;
+const height = Dimensions.get("window").height;
 
 const Explore = (props) => {
   const { user } = useAuth();
@@ -44,7 +44,7 @@ const Explore = (props) => {
 
   async function getAdvert() {
     // retrieves ad depending on current location
-    let permission = await checkPermissions();
+    const permission = await checkPermissions();
     if (permission) {
       let advert = await Geolocation.getCurrentPosition(
         async (position) => {
@@ -87,7 +87,7 @@ const Explore = (props) => {
 
   async function checkPermissions() {
     let checked = false;
-    let permission = await check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+    const permission = await check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
     if (permission == RESULTS.GRANTED) {
       checked = true;
     }

@@ -4,6 +4,8 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import "RNBootSplash.h"
+#import <RNCPushNotificationIOS.h>
+#import <Firebase.h>
 
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
@@ -14,9 +16,6 @@
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 
 #import <UserNotifications/UserNotifications.h>
-#import <RNCPushNotificationIOS.h>
-// #import <TSBackgroundFetch/TSBackgroundFetch.h>
-#import <Firebase.h>
 
 static void InitializeFlipper(UIApplication *application) {
   FlipperClient *client = [FlipperClient sharedClient];
